@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.E.C. Recipe Collection - Add Recipe</title>
+    <style>
+        :root {
+            --color-primary: #FF6B35;
+            --color-secondary: #4A4A4A;
+            --color-background: #F9F5EB;
+            --color-paper: #FFF8E7;
+            --color-accent: #7A3E00;
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-secondary);
+            line-height: 1.6;
+        }
+
+        /* Gingham pattern background */
+        .gingham-bg {
+            background-image: linear-gradient(45deg, 
+                rgba(255, 107, 53, 0.1) 25%, 
+                transparent 25%, 
+                transparent 75%, 
+                rgba(255, 107, 53, 0.1) 75%, 
+                rgba(255, 107, 53, 0.1)), 
+            linear-gradient(45deg, 
+                rgba(255, 107, 53, 0.1) 25%, 
+                transparent 25%, 
+                transparent 75%, 
+                rgba(255, 107, 53, 0.1) 75%, 
+                rgba(255, 107, 53, 0.1));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            padding: var(--space-4);
+            min-height: 100vh;
+        }
+
+        /* Header styling */
+        .header-pattern {
+            background-color: #FF8B5E;
+            background-image: 
+                linear-gradient(45deg, 
+                    #FF6B35 25%, 
+                    transparent 25%,
+                    transparent 75%,
+                    #FF6B35 75%
+                ),
+                linear-gradient(-45deg,
+                    #FF6B35 25%,
+                    transparent 25%,
+                    transparent 75%,
+                    #FF6B35 75%
+                ),
+                linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.2) 25%,
+                    transparent 25%,
+                    transparent 75%,
+                    rgba(255, 255, 255, 0.2) 75%
+                ),
+                linear-gradient(-45deg,
+                    rgba(255, 255, 255, 0.2) 25%,
+                    transparent 25%,
+                    transparent 75%,
+                    rgba(255, 255, 255, 0.2) 75%
+                );
+            background-size: 60px 60px, 60px 60px, 30px 30px, 30px 30px;
+            background-position: 
+                0 0,
+                30px 30px,
+                0 0,
+                15px 15px;
+            padding: var(--space-6);
+            margin-bottom: var(--space-4);
+        }
+
+        .header {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #4CAF50;
+            padding: var(--space-2) var(--space-4);
+            border-radius: 4px;
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 4px;
+            padding: var(--space-1) var(--space-2);
+        }
+
+        .search-bar input {
+            border: none;
+            padding: var(--space-1);
+            width: 200px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #DDD;
+        }
+
+        /* Main content styling */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--color-paper);
+            padding: var(--space-6);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .page-title {
+            font-family: 'Georgia', serif;
+            color: var(--color-accent);
+            text-align: center;
+            margin-bottom: var(--space-6);
+            font-size: 2rem;
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: var(--space-2);
+        }
+
+        .form-section {
+            margin-bottom: var(--space-8);
+            background: var(--color-paper);
+            padding: var(--space-4);
+            border-radius: 8px;
+        }
+
+        .section-title {
+            font-family: 'Georgia', serif;
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-2);
+            border-bottom: 1px solid var(--color-primary);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-4);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: var(--space-2);
+            color: var(--color-accent);
+            font-family: 'Georgia', serif;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: var(--space-2);
+            border: 1px solid #D4C5B9;
+            border-radius: 4px;
+            background-color: #FFFFFF;
+            font-family: 'Georgia', serif;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .ingredients-section {
+            background: #FFFFFF;
+            padding: var(--space-4);
+            border-radius: 4px;
+            border: 1px solid #D4C5B9;
+            margin-bottom: var(--space-4);
+        }
+
+        .ingredient-row {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 2fr 40px;
+            gap: var(--space-2);
+            margin-bottom: var(--space-2);
+            align-items: center;
+        }
+
+        .btn {
+            padding: var(--space-2) var(--space-4);
+            border: none;
+            border-radius: 4px;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .tag {
+            background: #FFE4D6;
+            color: var(--color-accent);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 16px;
+            font-size: 0.875rem;
+            display: inline-block;
+            margin: var(--space-1);
+        }
+
+        /* Decorative elements */
+        .corner-decoration {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--color-primary);
+            opacity: 0.5;
+        }
+
+        .corner-decoration.top-left {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-decoration.top-right {
+            top: 20px;
+            right: 20px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-decoration.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-decoration.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="gingham-bg">
+        <!-- Header with pattern -->
+        <div class="header-pattern">
+            <header class="header">
+                <button class="menu-button">☰</button>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search recipes...">
+                    <button>🔍</button>
+                </div>
+                <div class="user-avatar"></div>
+            </header>
+        </div>
+
+        <div class="container">
+            <div class="corner-decoration top-left"></div>
+            <div class="corner-decoration top-right"></div>
+            <div class="corner-decoration bottom-left"></div>
+            <div class="corner-decoration bottom-right"></div>
+
+            <h1 class="page-title">Add New Recipe</h1>
+
+            <form>
+                <!-- Basic Information -->
+                <section class="form-section">
+                    <h2 class="section-title">Basic Information</h2>
+                    <div class="form-group">
+                        <label class="form-label" for="title">Recipe Title*</label>
+                        <input type="text" id="title" class="form-input" required placeholder="e.g., Classic Chocolate Chip Cookies">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="description">Description*</label>
+                        <textarea id="description" class="form-textarea" required placeholder="Brief description of your recipe"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="category">Category*</label>
+                            <select id="category" class="form-select" required>
+                                <option value="">Select category</option>
+                                <option value="main">Main Dish</option>
+                                <option value="dessert">Dessert</option>
+                                <option value="bread">Bread</option>
+                                <option value="soup">Soup</option>
+                                <option value="salad">Salad</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="cuisine">Cuisine</label>
+                            <select id="cuisine" class="form-select">
+                                <option value="">Select cuisine</option>
+                                <option value="italian">Italian</option>
+                                <option value="mexican">Mexican</option>
+                                <option value="asian">Asian</option>
+                                <option value="mediterranean">Mediterranean</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recipe Details -->
+                <section class="form-section">
+                    <h2 class="section-title">Recipe Details</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="prep-time">Preparation Time (minutes)*</label>
+                            <input type="number" id="prep-time" class="form-input" required min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="cook-time">Cooking Time (minutes)*</label>
+                            <input type="number" id="cook-time" class="form-input" required min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="servings">Servings*</label>
+                            <input type="number" id="servings" class="form-input" required min="1">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="difficulty">Difficulty</label>
+                            <select id="difficulty" class="form-select">
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="cost">Cost Range</label>
+                            <select id="cost" class="form-select">
+                                <option value="budget">Budget</option>
+                                <option value="moderate">Moderate</option>
+                                <option value="expensive">Expensive</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Ingredients -->
+                <section class="form-section">
+                    <h2 class="section-title">Ingredients</h2>
+                    
+                    <!-- Ingredient Section -->
+                    <div class="ingredients-section">
+                        <h3 style="margin-bottom: var(--space-3);">Main Ingredients</h3>
+                        
+                        <div class="ingredient-header">
+                            <div>Ingredient</div>
+                            <div>Quantity</div>
+                            <div>Unit</div>
+                            <div>Preparation</div>
+                            <div></div>
+                        </div>
+
+                        <div class="ingredient-row">
+                            <div>
+                                <input type="text" class="form-input" placeholder="e.g., Flour">
+                            </div>
+                            <div>
+                                <input type="number" class="form-input" min="0" step="0.1">
+                            </div>
+                            <div>
+                                <select class="form-select">
+                                    <option value="g">g</option>
+                                    <option value="kg">kg</option>
+                                    <option value="ml">ml</option>
+                                    <option value="l">L</option>
+                                    <option value="cup">cup</option>
+                                    <option value="tbsp">tbsp</option>
+                                    <option value="tsp">tsp</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="text" class="form-input" placeholder="e.g., sifted">
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-outline">×</button>
+                            </div>
+                        </div>
+
+                        <div class="ingredient-row">
+                            <div class="checkbox-group" style="grid-column: 1 / -1;">
+                                <input type="checkbox" id="optional-1">
+                                <label for="optional-1">Optional ingredient</label>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-outline btn-add">+ Add Ingredient</button>
+                    </div>
+
+                    <button type="button" class="btn btn-outline">+ Add New Section (e.g., "For the sauce")</button>
+                </section>
+
+                <!-- Instructions -->
+                <section class="form-section">
+                    <h2 class="section-title">Instructions</h2>
+                    <div class="form-group">
+                        <label class="form-label">Step 1</label>
+                        <textarea class="form-textarea" placeholder="Describe this step..."></textarea>
+                        <div style="margin-top: var(--space-2);">
+                            <button type="button" class="btn btn-outline">+ Add Image</button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-outline btn-add">+ Add Step</button>
+                </section>
+
+                <!-- Additional Information -->
+                <section class="form-section">
+                    <h2 class="section-title">Additional Information</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Tags</label>
+                        <input type="text" class="form-input" placeholder="Type and press Enter to add tags">
+                        <div class="tag-group">
+                            <span class="tag">Vegetarian</span>
+                            <span class="tag">Gluten-free</span>
+                            <span class="tag">+ Add Tag</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="notes">Notes</label>
+                        <textarea id="notes" class="form-textarea" placeholder="Any additional notes about the recipe..."></textarea>
+                    </div>
+                </section>
+
+                <!-- Form Actions -->
+                <div style="display: flex; gap: var(--space-4); justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline">Save as Draft</button>
+                    <button type="submit" class="btn btn-primary">Publish Recipe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
