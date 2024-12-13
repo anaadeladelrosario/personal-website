@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Manager Color Palette</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #FDFBF7;
+        }
+        
+        h1 {
+            color: #3D405B;
+            margin-bottom: 30px;
+        }
+        
+        .palette-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .color-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .color-box {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .color-display {
+            height: 100px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+        
+        .color-info {
+            padding: 10px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+        
+        .example-ui {
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .button {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .button.outline {
+            background: transparent;
+            border: 2px solid;
+        }
+
+        .form-example {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 20px auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #3D405B;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .text-sample {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recipe Manager Color Palette</h1>
+    
+    <div class="palette-container">
+        <!-- Primary Colors -->
+        <div class="color-section">
+            <h2>Primary Colors</h2>
+            
+            <div class="color-box">
+                <div class="color-display" style="background-color: #FDFBF7; color: #333;">
+                    Background
+                </div>
+                <div class="color-info">
+                    Light Cream: #FDFBF7
+                </div>
+            </div>
+            
+            <div class="color-box">
+                <div class="color-display" style="background-color: #E07A5F;">
+                    Primary
+                </div>
+                <div class="color-info">
+                    Warm Terracotta: #E07A5F
+                </div>
+            </div>
+            
+            <div class="color-box">
+                <div class="color-display" style="background-color: #81B29A;">
+                    Secondary
+                </div>
+                <div class="color-info">
+                    Sage Green: #81B29A
+                </div>
+            </div>
+            
+            <div class="color-box">
+                <div class="color-display" style="background-color: #3D405B;">
+                    Accent
+                </div>
+                <div class="color-info">
+                    Deep Blue: #3D405B
+                </div>
+            </div>
+        </div>
+        
+        <!-- Functional Colors -->
+        <div class="color-section">
+            <h2>Functional Colors</h2>
+            
+            <div class="color-box">
+                <div class="color-display" style="background-color: #81B29A;">
+                    Success
+                </div>
+                <div class="color-info">
+                    Success Green: #81B29A
+                </div>
+            </div>
+            
+            <div class="color-box">
+                <div class="color-display" style="background-color: #F2CC8F;">
+                    Warning
+                </div>
+                <div class="color-info">
+                    Warning Yellow: #F2CC8F
+                </div>
+            </div>
+            
+            <div class="color-box">
+                <div class="color-display" style="background-color: #E07A5F;">
+                    Error
+                </div>
+                <div class="color-info">
+                    Error Red: #E07A5F
+                </div>
+            </div>
+            
+            <div class="color-box">
+                <div class="color-display" style="background-color: #98C1D9;">
+                    Info
+                </div>
+                <div class="color-info">
+                    Info Blue: #98C1D9
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- UI Examples -->
+    <div class="example-ui">
+        <h2>UI Examples</h2>
+        
+        <!-- Form Example -->
+        <h3>Form Example</h3>
+        <div class="form-example">
+            <form>
+                <div class="form-group">
+                    <label>Recipe Name</label>
+                    <input type="text" placeholder="Enter recipe name">
+                </div>
+                <div class="form-group">
+                    <label>Cooking Time (minutes)</label>
+                    <input type="number" placeholder="Enter cooking time">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="button outline" style="color: #3D405B; border-color: #3D405B;">
+                        Cancel
+                    </button>
+                    <button type="submit" class="button" style="background-color: #E07A5F;">
+                        Save Recipe
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Buttons -->
+        <div>
+            <h3>Buttons</h3>
+            <button class="button" style="background-color: #E07A5F;">Primary Button</button>
+            <button class="button" style="background-color: #81B29A;">Secondary Button</button>
+            <button class="button" style="background-color: #3D405B;">Accent Button</button>
+        </div>
+        
+        <!-- Text Examples -->
+        <div class="text-sample" style="background-color: #FDFBF7;">
+            <h3 style="color: #3D405B;">Sample Text on Background</h3>
+            <p style="color: #3D405B;">This is how regular text will look on our light cream background. The deep blue color provides excellent readability while maintaining a sophisticated appearance.</p>
+            <p style="color: #E07A5F;">This is an example of primary colored text.</p>
+            <p style="color: #81B29A;">This is an example of secondary colored text.</p>
+        </div>
+    </div>
+</body>
+</html>
