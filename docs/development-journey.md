@@ -60,6 +60,26 @@ This document tracks the conversation and development process of creating our re
 - Outlined key features implementation approach
 - Established development workflow
 
+### Prompt 4: UI/UX Design Exploration
+**User Request:** Elaborate on the user interface design approach before implementation.
+
+**Response Summary:**
+- Created `ui-design.md` with comprehensive design documentation:
+  - Dual-mode interface (Structured/Freestyle)
+  - Kitchen-friendly design principles
+  - Detailed screen layouts
+  - Color scheme and typography
+  - Responsive design approach
+  - Accessibility considerations
+
+**Key Design Decisions:**
+1. Dual-mode recipe creation to support both personas' cooking styles
+2. Kitchen-friendly interface with large, touch-friendly elements
+3. Prominent measurement conversion tools
+4. Real-time collaboration features
+5. Responsive design for all devices
+6. Accessibility-first approach
+
 ### Key Technical Decisions:
 1. Leveraging Isabella's frontend expertise with React and TypeScript
 2. Utilizing James's backend proficiency with ASP.NET Core
@@ -71,13 +91,183 @@ This document tracks the conversation and development process of creating our re
 2. Detailed personas provide clear direction for feature development
 3. Combining different user approaches (methodical vs. intuitive) requires flexible system design
 
+### Data Structure Design (2024-12-13)
+
+### Core Data Models
+Below are the proposed TypeScript interfaces for the recipe management system. These interfaces define the structure of our data and will guide both frontend and backend development.
+
+#### User Profile
+```typescript
+interface User {
+    id: string;
+    username: string;
+    displayName: string;
+    profilePicture: string;
+    email: string;
+    preferences: {
+        defaultMetricSystem: 'metric' | 'imperial';
+        defaultPortionSize: number;
+    };
+    createdAt: timestamp;
+    lastActive: timestamp;
+}
+```
+
+#### Recipe Core
+```typescript
+interface Recipe {
+    id: string;
+    title: string;
+    description: string;
+    author: {
+        id: string;
+        name: string;
+    };
+    origin: {
+        country: string;
+        region?: string;
+        attribution: 'original' | 'adapted' | 'copied';
+        sourceUrl?: string;
+        sourceName?: string;
+    };
+    difficulty: 'easy' | 'medium' | 'hard';
+    preparationTime: number; // minutes
+    cookingTime: number; // minutes
+    restingTime?: number; // minutes
+    totalTime: number; // calculated
+    servings: {
+        default: number;
+        min: number;
+        max: number;
+    };
+    nutrition?: {
+        calories: number;
+        protein: number;
+        carbs: number;
+        fat: number;
+        // per serving
+    };
+    tags: string[]; // for filtering: vegetarian, gluten-free, etc.
+    category: string[]; // main dish, dessert, etc.
+    season?: string[]; // summer, winter, etc.
+    occasion?: string[]; // birthday, christmas, etc.
+    equipment: string[]; // required kitchen tools
+    temperature?: {
+        value: number;
+        unit: 'celsius' | 'fahrenheit';
+    };
+    cost: 'budget' | 'moderate' | 'expensive';
+    ratings: {
+        average: number;
+        count: number;
+    };
+    status: 'draft' | 'published' | 'archived';
+    createdAt: timestamp;
+    updatedAt: timestamp;
+    lastCooked?: timestamp;
+    isFavorite: boolean;
+    notes: string;
+}
+```
+
+#### Recipe Components
+```typescript
+interface IngredientSection {
+    id: string;
+    recipeId: string;
+    title: string; // e.g., "Dough", "Filling", "Sauce"
+    order: number;
+    ingredients: Ingredient[];
+}
+
+interface Ingredient {
+    id: string;
+    name: string;
+    quantity: number;
+    unit: string; // g, ml, cups, etc.
+    notes?: string;
+    isOptional: boolean;
+    substitutes?: string[];
+    preparation?: string; // "chopped", "diced", etc.
+}
+
+interface InstructionStep {
+    id: string;
+    recipeId: string;
+    stepNumber: number;
+    description: string;
+    images?: string[];
+    duration?: number; // minutes
+    temperature?: {
+        value: number;
+        unit: 'celsius' | 'fahrenheit';
+    };
+    tips?: string;
+    warningNotes?: string;
+    isOptional: boolean;
+}
+```
+
+#### Additional Metadata
+```typescript
+interface RecipeMetadata {
+    collections: string[]; // user-defined collections
+    mealPlanDates: timestamp[];
+    sharedWith: string[]; // user IDs
+    privacyLevel: 'private' | 'shared' | 'public';
+    version: number; // for recipe iterations
+    parentRecipeId?: string; // if it's a variation
+    translations?: {
+        [languageCode: string]: {
+            title: string;
+            description: string;
+            instructions: string[];
+        }
+    };
+    dietaryInfo: {
+        allergens: string[];
+        restrictions: string[];
+        certifications?: string[]; // kosher, halal, etc.
+    };
+}
+```
+
+### Key Considerations for Implementation
+
+1. **Data Storage Requirements**
+   - Flexible schema for recipe variations
+   - Strong relationships between components
+   - Support for real-time updates
+   - Efficient querying capabilities
+   - Image storage and optimization
+
+2. **Search and Filter Capabilities**
+   - Full-text search across recipes
+   - Filter by multiple criteria (tags, categories, time, etc.)
+   - Sort by various parameters
+   - Support for partial matching
+   - Performance optimization for large datasets
+
+3. **Future Extensibility**
+   - Version control for recipes
+   - Measurement conversion system
+   - Shopping list generation
+   - Meal planning features
+   - Social sharing capabilities
+   - Recipe import functionality
+
+This data structure design aims to support both current requirements and future feature additions while maintaining flexibility and scalability.
+
 ### Next Steps:
+- Create UI component library
+- Implement design system
+- Develop prototype screens
+- User testing with both personas
 - Set up development environment
 - Create initial project structure
 - Implement basic authentication
 - Develop measurement conversion service
 - Technical architecture design
-- User interface mockups
 - Database schema design
 - Feature prioritization
 
