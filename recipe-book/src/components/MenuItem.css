@@ -1,0 +1,110 @@
+/* Menu item container - uses CSS Grid for consistent alignment */
+.menu-item {
+    display: grid;
+    /* Define 3 columns:
+       1. 24px fixed width for icon space
+       2. 1fr to allow label to take remaining space
+       3. auto for the arrow indicator in submenus */
+    grid-template-columns: 24px 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.menu-item:hover .menu-item-label {
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.menu-item:hover .menu-item-icon {
+    fill: var(--color-primary);
+}
+
+/* Icon sizing for consistency */
+.menu-item-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-primary);
+}
+
+/* Creates an empty space when no icon is present
+     This ensures alignment consistency between items with and without icons */
+.menu-item::before {
+    content: '';
+    width: 20px;
+    grid-column: 1;
+    /* Places the empty space in the first column */
+}
+
+/* Position icon in the first column
+     This will override the empty space when an icon is present */
+.menu-item-icon {
+    grid-column: 1;
+}
+
+/* Position label in the second column
+     This ensures all labels line up regardless of icon presence */
+.menu-item-label {
+    grid-column: 2;
+}
+
+/* Position arrow indicator in the last column
+     Only appears for items with submenus */
+.menu-item-arrow {
+    grid-column: 3;
+}
+
+.menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.menu-item:hover .menu-item-icon {
+    color: #e57373;
+}
+
+.menu-item-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.menu-item-arrow.open {
+    transform: rotate(90deg);
+}
+
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.submenu.open {
+    max-height: 300px;
+    transition: max-height 0.5s ease-in;
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    display: grid;
+}
+
+.submenu::-webkit-scrollbar {
+    display: none;
+    /* Hides scrollbar for Webkit browsers (Chrome, Safari) */
+}
+
+.submenu-item {
+    color: #666;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.4rem 0;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.submenu-item:hover {
+    color: #e57373;
+}
