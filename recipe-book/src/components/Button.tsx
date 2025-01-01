@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 
 export interface ButtonProps {
   primary?: boolean;
@@ -22,7 +23,7 @@ export const Button = ({
 }: ButtonProps) => {
   const mode = primary ? 'button--primary' : 'button--secondary';
   return (
-    <button 
+    <StyledButton label={"label"} 
       type={type}
       className={['button', `button--${size}`, mode].join(' ')}
       style={style}
@@ -31,6 +32,12 @@ export const Button = ({
       {...props}
     >
       {label}
-    </button>
+    </StyledButton>
   );
 };
+
+const StyledButton = styled.button<ButtonProps>`
+  width: ${(props) => (props.size === 'small' ? 'fit-content' : props.size === 'large' ? '100%' : 'fit-content')};
+  font-size: ${(props) => (props.size === 'small' ? '12px' : props.size === 'large' ? '16px' : '14px')};
+  background-color: ${(props) => (props.primary ? 'var(--color-accent)' : 'var(--color-primary)')};
+`;

@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-md) var(--space-lg);
-  background-color: white;
+  background-color: var(--color-secondary);
   box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
@@ -18,7 +18,6 @@
 
 .header-center {
   flex: 1;
-  max-width: 600px;
   margin: 0 var(--space-xl);
 }
 
@@ -41,6 +40,7 @@
   font-family: var(--font-body);
   font-size: var(--text-base);
   transition: all var(--transition-fast);
+  margin-left: var(--space-sm);
 }
 
 .search-input:focus {
@@ -65,13 +65,14 @@
 
 .logout-button {
   padding: var(--space-xs) var(--space-md);
-  background-color: var(--color-accent);
+  background-color: var(--color-primary);
   color: white;
   border: none;
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   cursor: pointer;
   transition: opacity var(--transition-fast);
+  width: fit-content;
 }
 
 .logout-button:hover {
@@ -79,6 +80,12 @@
 }
 
 /* Responsive adjustments */
+
+@media (min-width: 1024px) {
+    .header-left {
+        flex: 1;
+    }
+}
 
 /* Additional adjustments for larger mobile devices (max-width: 992px) */
 @media (max-width: 992px) {
@@ -126,6 +133,11 @@
   .header-right {
     margin-left: auto;
   }
+
+  .search-container {
+      position: relative;
+      width: 95%;
+  }
 }
 
 /* Extra Small devices (max-width: 480px) */
@@ -150,6 +162,11 @@
 
   .user-info {
     font-size: var(--text-xxs);
+  }
+
+  .search-container {
+      position: relative;
+      width: 95%;
   }
 
   /* You can also hide or modify elements for small screens */

@@ -1,8 +1,9 @@
 .burger-menu {
     position: relative;
-    display: inline-block;
+    display: flex;
     flex-direction: column;
     padding: 20px;
+  
 }
 
 .burger-button {
@@ -47,3 +48,18 @@
 .burger-menu.open .burger-line:nth-child(3) {
     transform: rotate(-45deg);
 }
+
+@media (min-width: 1024px) {
+    .burger-menu {
+        display: none;
+    }
+}
+
+@media(min-width: 768px) {
+    .burger-menu {
+       padding: 5px;
+    }
+}
+
+
+

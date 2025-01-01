@@ -1,0 +1,42 @@
+.book-container {
+  min-height: 100vh;
+  position: relative;
+  width: 95%;
+}
+
+.gingham-bg {
+  background-image:
+    linear-gradient(45deg,
+      rgba(255, 107, 53, 0.1) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(255, 107, 53, 0.1) 75%,
+      rgba(255, 107, 53, 0.1)),
+    linear-gradient(45deg,
+      rgba(255, 107, 53, 0.1) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(255, 107, 53, 0.1) 75%,
+      rgba(255, 107, 53, 0.1));
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+  min-height: 100vh;
+  padding: var(--space-xl);
+}
+
+.index-card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.index-title {
+  font-family: var(--font-primary);
+  font-size: var(--text-2xl);
+  color: var(--color-accent);
+  margin-bottom: var(--space-lg);
+  text-align: center;
+} 

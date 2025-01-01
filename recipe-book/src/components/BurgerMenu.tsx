@@ -1,38 +1,25 @@
-import React, {  useState } from 'react';
-import './BurgerMenu.css'
-import { Menu } from './Menu';
-import { MenuItemProps } from './MenuItem';
+import React from 'react';
+import './BurgerMenu.css';
 
 export interface BurgerMenuProps {
-  title?: string;
   onMenuToggle?: (isOpen: boolean) => void;
-  menuItems: MenuItemProps[];
   onClick?: () => void;
   style?: React.CSSProperties;
 }
 
 export const BurgerMenu: React.FC<BurgerMenuProps> = ({
-  title,
-  onMenuToggle,
-  menuItems,
+  onClick,
   style,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    const newState = !isOpen;
-    setIsOpen(newState);
-    onMenuToggle?.(newState);
-  };
 
   return (
       <div className="burger-menu" style={style}>
-        <button className="burger-button" onClick={toggleMenu}>
+        <button className="burger-button" onClick={onClick}>
           <span className="burger-line"></span>
           <span className="burger-line"></span>
           <span className="burger-line"></span>
         </button>
-        {isOpen && <Menu title={title} items={menuItems} />}
       </div>
   );
 };
