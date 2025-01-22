@@ -13,6 +13,7 @@
     color: var(--color-text);
     cursor: pointer;
     padding: 10px 15px;
+    width:fit-content;
 }
 
 .menu-item:hover .menu-item-label {
@@ -96,6 +97,11 @@
     /* Hides scrollbar for Webkit browsers (Chrome, Safari) */
 }
 
+.desktop {
+    position:absolute;
+    z-index:1;
+}
+
 .submenu-item {
     color: #666;
     text-decoration: none;
@@ -107,4 +113,14 @@
 
 .submenu-item:hover {
     color: #e57373;
+}
+
+@media (min-width:1024px){
+
+
+        .submenu-item {
+            background-color: #9AC1AE;
+            flex-direction: row;
+
+        }
 }

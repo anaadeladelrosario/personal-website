@@ -82,13 +82,35 @@
 /* Responsive adjustments */
 
 @media (min-width: 1024px) {
-    .header-left {
-        flex: 1;
-    }
+ 
+        .header {
+        flex-wrap: wrap; /* Allow wrapping of children to next line */
+        height: 250px;
+       
+        }
+        .header-left{
+            flex: 0 0 100%;
+        }
+        .header-center{
+            flex: 1 1 50%;
+            position:relative;
+           top:20px;
+           margin:0;
+        }
+
+        .header-right{
+            position:relative;
+            bottom:110px;
+
+        }
+
+         .search-container {
+            width: 90%;
+        }
 }
 
 /* Additional adjustments for larger mobile devices (max-width: 992px) */
-@media (max-width: 992px) {
+@media (min-width: 767px) and (max-width: 1024px) {
     .header {
         padding: var(--space-md);
     }
