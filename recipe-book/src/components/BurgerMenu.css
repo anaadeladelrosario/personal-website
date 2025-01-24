@@ -38,16 +38,67 @@
 }
 
 .burger-menu.open .burger-line:first-child {
-    transform: rotate(45deg);
+    transform: rotate(45deg) 
 }
 
 .burger-menu.open .burger-line:nth-child(2) {
-    opacity: 0;
+    transform: rotate(-45deg); 
+    width: 25%;
+    height: 2px;
+    top: -1.5px;
+    right: -5px;
 }
 
 .burger-menu.open .burger-line:nth-child(3) {
     transform: rotate(-45deg);
 }
+
+.burger-menu.open .burger-line:first-child::before,
+.burger-menu.open .burger-line:first-child::after {
+  content: ''; 
+  position: absolute;
+  width: 35%;
+  height: 2px;
+  background-color: inherit; 
+  left: 0;
+}
+
+.burger-menu.open .burger-line:first-child::before {
+  top: -3px; 
+}
+
+.burger-menu.open .burger-line:first-child::after {
+  top: 3px; 
+}
+
+.burger-menu.open .burger-line:nth-child(2)::before,
+.burger-menu.open .burger-line:nth-child(2)::after{
+    transform: rotate(-90deg); 
+    width: 35%;
+    height: 2px;
+}
+
+.burger-menu.open .burger-line:nth-child(3)::before,
+.burger-menu.open .burger-line:nth-child(3)::after {
+  content: ''; 
+  position: absolute;
+  width: 35%;
+  height: 2px;
+  background-color: inherit; 
+  left: 0;
+}
+
+.burger-menu.open .burger-line:nth-child(3)::before {
+  top: -1px; 
+   transform: rotate(9deg); 
+   left: 20px;
+}
+
+.burger-menu.open .burger-line:nth-child(3)::after {
+  top: 0px; 
+  transform: rotate(-9deg);
+}
+
 
 @media (min-width: 1024px) {
     .burger-menu {
