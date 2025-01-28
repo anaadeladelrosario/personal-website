@@ -30,6 +30,19 @@ h1 {
   line-height: 1.1;
 }
 
+h2{
+  font-family: var(--font-primary);
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+}
+
+h3{
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  line-height: 1.1;
+  padding-top: var(--space-xl);
+}
+
 button {
   border-radius: var(--radius-md);
   border: 1px solid transparent;
@@ -51,6 +64,11 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto var(--color-primary);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @media (prefers-color-scheme: light) {

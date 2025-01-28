@@ -6,7 +6,7 @@ export const Card: FC = () => {
   return (
     <div className="book-container">
         <div className="index-card">
-          <h2 className="index-title">Index</h2>
+          <h1 className="index-title">Index</h1>
           <RecipeIndex />
         </div>
     </div>

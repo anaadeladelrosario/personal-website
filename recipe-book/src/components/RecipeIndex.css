@@ -1,5 +1,6 @@
 .recipe-index {
   font-family: var(--font-body);
+  padding: var(--space-lg);
 }
 
 .category-section {
