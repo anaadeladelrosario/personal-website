@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import Menu from "./Menu";
-import { BurgerMenu } from "./BurgerMenu";
 import { Add01Icon } from "hugeicons-react";
 import { Home01Icon, Settings01Icon, ShoppingBag01Icon } from "hugeicons-react";
 import { MenuItemProps } from "./MenuItem";
@@ -19,37 +17,9 @@ const menuItems: MenuItemProps[] = [
 ];
 
 const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
-      if (window.innerWidth >= 1024) {
-        setIsOpen(true);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const toggleMenu = () => {
-    if (isMobile) {
-      setIsOpen(!isOpen);
-    }
-  };
-
   return (
     <NavbarContainer>
-      {isMobile && (
-        <div>
-          <BurgerMenu onClick={toggleMenu} />
-        </div>
-      )}
-      <Menu isOpen={isOpen} items={menuItems} />
+      <Menu items={menuItems} />
     </NavbarContainer>
   );
 };

@@ -1,32 +1,32 @@
 import { MenuItem, MenuItemProps } from "./MenuItem";
 import "./Menu.css";
 import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useState } from "react";
+import { BurgerMenu } from "./BurgerMenu";
 
 export interface MenuProps {
   items?: MenuItemProps[];
   style?: React.CSSProperties;
-  isOpen: boolean;
 }
 
-const handleItemClick = (item: MenuItemProps[], index: number) => {
-  console.log(`Item clicked: ${item[index].label}`);
-};
+export const Menu = ({ items, style}: MenuProps) => {
+    const [isOpen, setIsOpen] = useState(false);
 
-export const Menu = ({ items, style, isOpen }: MenuProps) => {
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+};
   return (
-    <MenuDiv isOpen={isOpen} className="menu-content" style={style}>
+    <>
+    <BurgerMenu onClick={toggleMenu} />
+    <MenuDiv className={`menu-content${isOpen ? "-open": ""}`} style={style}>
       <ul className="menu-list">
         {items ? (
           items.map((item) => (
             <li key={uuidv4()}>
-              <Link to={item.label}>
                 <MenuItem
                   {...item}
-                  onItemClick={() => handleItemClick(items, 0)}
                 />
-              </Link>
             </li>
           ))
         ) : (
@@ -34,16 +34,25 @@ export const Menu = ({ items, style, isOpen }: MenuProps) => {
         )}
       </ul>
     </MenuDiv>
+    </>
   );
 };
 
 export default Menu;
 
-const MenuDiv = styled.div<{ isOpen: boolean }>`
-  display: ${(props) => (props.isOpen ? "block" : "none")};
+const MenuDiv = styled.div`
+  display: ${(props) => (props.className == "menu-content-open" ? "block" : "none")};
   flex-direction: column;
 
   @media (min-width: 1024px) {
     display: block; // Always show on desktop
+  }
+  @media (max-width: 1024px) {
+   position: absolute; 
+   padding: var(--space-md);
+   transition: all 0.3s ease-in-out;
+   overflow: hidden;
+   white-space: nowrap;
+   background-color: var(--color-secondary);
   }
 `;

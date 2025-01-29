@@ -1,12 +1,3 @@
-.menu-content {
-    background-color:var(--color-secondary);
-    padding: var(--space-md);
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s ease-in-out;
-    overflow: hidden;
-    white-space: nowrap;
-    border: 0;
-}
 
 .menu-list {
     list-style: none;
