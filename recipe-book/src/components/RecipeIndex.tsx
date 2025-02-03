@@ -3,6 +3,7 @@ import './RecipeIndex.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { organizeRecipesByCategory } from '../utils/RecipeUtils';
+import { Link } from 'react-router-dom';
 
 export interface RecipeProps {
         id: number;
@@ -57,7 +58,7 @@ useEffect(() => {
                <div className="recipe-list">
  {category.recipes.map((recipe, recipeIndex) => (
               <div key={recipeIndex} className="recipe-item">
-                 <span className="recipe-name">{recipe.title}</span>
+                 <Link to={`/recipe/${recipe.id}`} className="recipe-name">{recipe.title}</Link>
                 <span className="recipe-dots"></span>
                  <span className="recipe-page">{1}</span>
               </div>

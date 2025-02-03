@@ -68,7 +68,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
           to={
             convertStringToLink(label) === "home"
               ? "/"
-              : `/${convertStringToLink(label)}`
+              : `recipe/${convertStringToLink(label)}`
           }
            className="menu-item"
         >
@@ -88,7 +88,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
           to={
             convertStringToLink(label) === "home"
               ? "/"
-              : `/${convertStringToLink(label)}`
+              : `recipe/${convertStringToLink(label)}`
           }
         >
           <div className="menu-item">
