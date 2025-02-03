@@ -8,14 +8,6 @@ import { Link } from 'react-router-dom';
 export interface RecipeProps {
         id: number;
         title: string;
-        description: string;
-        category:string;
-        cuisine:string;
-        preparationTime: number;
-        cookingTime: number;
-        servings: number;
-        difficulty: string;
-        costRange: string;
     };
 
 export const RecipeIndex: FC = () => {
@@ -51,6 +43,7 @@ useEffect(() => {
 
   return (
     <div className="recipe-index">
+       <h1 className="index-title">Index</h1>
          <div className="category-section">
            {organizedRecipes.map((category, categoryIndex) => (
              <div key={categoryIndex} className="category-item">
@@ -58,7 +51,7 @@ useEffect(() => {
                <div className="recipe-list">
  {category.recipes.map((recipe, recipeIndex) => (
               <div key={recipeIndex} className="recipe-item">
-                 <Link to={`/recipe/${recipe.id}`} className="recipe-name">{recipe.title}</Link>
+                 <Link to={`/Recipe/${recipe.id}`} className="recipe-name">{recipe.title}</Link>
                 <span className="recipe-dots"></span>
                  <span className="recipe-page">{1}</span>
               </div>
