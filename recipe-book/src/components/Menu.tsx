@@ -11,7 +11,7 @@ export interface MenuProps {
 }
 
 export const Menu = ({ items, style}: MenuProps) => {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -44,6 +44,7 @@ const MenuDiv = styled.div`
   display: ${(props) => (props.className == "menu-content-open" ? "block" : "none")};
   flex-direction: column;
 
+
   @media (min-width: 1024px) {
     display: block; // Always show on desktop
   }
@@ -54,5 +55,8 @@ const MenuDiv = styled.div`
    overflow: hidden;
    white-space: nowrap;
    background-color: var(--color-secondary);
+  top: 100%;
+  left: 0;
+  width: 250px;
   }
 `;

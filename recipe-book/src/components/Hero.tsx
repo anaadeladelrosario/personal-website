@@ -3,6 +3,7 @@ import spices from '../assets/spices.jpg'
 import { Card } from "./Card"
 import './Hero.css'
 import { Link } from 'react-router-dom';
+import { RecipeIndex } from './RecipeIndex';
 
 function Hero() {
   return (
@@ -17,7 +18,7 @@ function Hero() {
             <Button size="small" primary label="Add" />
           </Link>
         </div>
-      <Card />
+      <Card children={<RecipeIndex />} />
     </div>
   )
 }
