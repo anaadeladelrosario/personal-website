@@ -5,6 +5,7 @@ import spices from '../assets/spices.jpg'
 import IngredientsList from './IngredientsList';
 import InstructionCard from './InstructionCard';
 import styled from 'styled-components';
+import { Button } from './Button';
 
 export interface InstructionsProps {
   id?: number,
@@ -22,19 +23,22 @@ export interface IngredientProps {
   preparation: string | null,
 }
 
-interface Recipe {
-        id: number;
+export interface Recipe {
+        id?: number;
         title: string;
         description: string;
         category:string;
         cuisine:string;
         preparationTime: number;
+        notes: string;
         cookingTime: number;
         servings: number;
         difficulty: string;
         costRange: string;
         instructions:InstructionsProps[];
         ingredients:IngredientProps[];
+        tags: string[];
+        isVegetarian: boolean;
       };
 
 export const Recipe : React.FC = () => {
@@ -59,6 +63,7 @@ export const Recipe : React.FC = () => {
       </div>
        <div style={{  maxWidth: "800px", width: '90%', padding: 'var(--space-md)', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-warning)', margin: 'var(--space-sm)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '10px' }} className="button-section">
          <p>{recipeId.description}</p> 
+            <Button size="small" primary label="Remove" />
         </div>
         <RecipeDiv>
        <div style={{ flex: '1 1 300px', backgroundColor: 'white',borderRadius: 'var(--radius-lg)', padding: 'var(--space-xl)', boxShadow: 'var(--shadow-md)', maxWidth: '800px', margin: '0 auto' }}>
@@ -68,8 +73,8 @@ export const Recipe : React.FC = () => {
         <InstructionCard instructions={recipeId.instructions.$values} />
       </div>
         </RecipeDiv>
-      </div>
-   
+      
+   </div>
     ):(<>{Error}</>)
 }
 
