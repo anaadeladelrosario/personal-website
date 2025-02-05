@@ -2,49 +2,98 @@ import { useState } from "react";
 import "./Form.css";
 import { Button } from "./Button";
 
-const cuisines = ["Argentinian", "Australian", "Cuban", "Italian", "Other"];
-const categories = ["Main Dishes", "Desserts", "Bread & Pastries", "Beverages"];
-const difficulties = ["Easy", "Medium", "Hard"];
-const costRanges = ["Budget", "Moderate", "Expensive"];
-const units = [
-  "g",
-  "kg",
-  "ml",
-  "l",
-  "oz",
-  "lb",
-  "pinch",
-  "tsp",
-  "tbsp",
-  "cup",
-  "pint",
-  "quart",
-  "gallon",
-  "ounce",
-  "pound",
-  "pinch",
-  "teaspoon",
-  "tablespoon",
-  "cup",
-  "pint",
-  "quart",
-  "gallon",
+export enum Cuisine {
+  Australian = "Australian",
+  Brazilian = "Brazilian",
+  Chinese = "Chinese",
+  Cuban = "Cuban",
+  Italian = "Italian",
+  Japanese = "Japanese",
+  Spanish = "Spanish",
+  Swedish = "Swedish"
+}
+const cuisines = [
+  Cuisine.Australian,
+  Cuisine.Brazilian,
+  Cuisine.Chinese,
+  Cuisine.Cuban,
+  Cuisine.Italian,
+  Cuisine.Japanese,
+  Cuisine.Spanish,
+  Cuisine.Swedish,
 ];
+export enum Categories {
+  Appetizer = "Appetizer",
+  MainCourse = "MainCourse",
+  Dessert = "Dessert",
+  Snack = "Snack",
+}
+const categories = [
+  Categories.Appetizer,
+  Categories.MainCourse,
+  Categories.Dessert,
+  Categories.Snack,
+];
+
+export enum Difficulty {
+  Easy = "Easy",
+  Medium = "Medium",
+  Hard = "Hard",
+}
+const difficulties = [Difficulty.Easy, Difficulty.Medium, Difficulty.Hard];
+
+export enum CostRange {
+  Budget = "Budget",
+  Moderate = "Moderate",
+  Expensive = "Expensive",
+}
+const costRanges = [CostRange.Budget, CostRange.Moderate, CostRange.Expensive];
+
+export enum Units {
+  Gram = "g",
+  Kilogram = "kg",
+  Milliliter = "ml",
+  Liter = "l",
+  Ounce = "oz",
+  Pound = "lb",
+  Pinch = "pinch",
+  Teaspoon = "tsp",
+  Tablespoon = "tbsp",
+  Cup = "cup",
+  Pint = "pint",
+  Quart = "quart",
+  Gallon = "gallon",
+}
+const units = [
+  Units.Gram,
+  Units.Kilogram,
+  Units.Milliliter,
+  Units.Liter,
+  Units.Ounce,
+  Units.Pound,
+  Units.Pinch,
+  Units.Teaspoon,
+  Units.Tablespoon,
+  Units.Cup,
+  Units.Pint,
+  Units.Quart,
+  Units.Gallon,
+]
 
 interface FormData {
   title: string;
   description: string;
-  category: string;
-  cuisine: string;
-  prepTime: number;
-  cookTime: number;
+  category: Categories;
+  cuisine: Cuisine;
+  preparationTime: number;
+  cookingTime: number;
   servings: number;
-  difficulty: string;
-  costRange: string;
+  difficulty: Difficulty;
+  costRange: CostRange;
   ingredients: {
     name: string;
     quantity: number;
-    unit: string;
+    unit: Units;
     optional: boolean;
     preparation?: string;
   }[];
@@ -58,23 +107,27 @@ interface FormData {
   notes: string;
 }
 
-export function RecipeForm() {
+export function Form() {
   const [formData, setFormData] = useState<FormData>({
     title: "",
     description: "",
-    category: "",
-    cuisine: "",
-    prepTime: 0,
-    cookTime: 0,
+    category: Categories.MainCourse,
+    cuisine: Cuisine.Australian,
+    preparationTime: 0,
+    cookingTime: 0,
     servings: 2,
-    difficulty: "",
-    costRange: "",
-    ingredients: [{ name: "", quantity: 0, unit: "", optional: false }],
-    instructions: [{ step: 1, description: "" }],
+    difficulty: Difficulty.Easy,
+    costRange: CostRange.Budget,
+    ingredients: [{ name: "", quantity: 0, unit: Units.Gram, optional: false, preparation: "" }],
+    instructions: [{ step: 1, description: "", image: "" }],
     tags: [],
     isVegetarian: false,
     notes: "",
   });
+
+    // State for tracking loading or errors
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -104,7 +157,7 @@ export function RecipeForm() {
       ...prev,
       ingredients: [
         ...prev.ingredients,
-        { name: "", quantity: 0, unit: "", optional: false },
+         { name: "", quantity: 0, unit: Units.Gram, optional: false, preparation: "" },
       ],
     }));
   };
@@ -114,14 +167,59 @@ export function RecipeForm() {
       ...prev,
       instructions: [
         ...prev.instructions,
-        { step: prev.instructions.length + 1, description: "" },
+        { step: prev.instructions.length + 1, description: "", image: "" },
       ],
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmitTest = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Recipe submitted:", formData);
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('https://localhost:44369/api/Recipe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)  // Send the recipe object as the request body
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add the recipe');
+      }
+
+      const result = await response.json();
+      console.log('Recipe added:', result);  // Log the response (new recipe with generated ID)
+      setFormData({
+        title: '',
+        ingredients: [],
+        instructions: [],
+        cuisine: Cuisine.Australian,
+        category: Categories.MainCourse,
+        difficulty: Difficulty.Easy,
+        costRange: CostRange.Budget,
+        notes: '',
+        tags: [],
+        isVegetarian: false,
+        description: "",
+        preparationTime: 0,
+        cookingTime: 0,
+        servings: 0,
+      });  // Reset form state after successful submit
+    } catch (err) {
+      setError('An error occurred while adding the recipe.');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -199,9 +297,9 @@ export function RecipeForm() {
               <label>Preparation Time (minutes)*</label>
               <input
                 type="number"
-                id="prepTime"
-                name="prepTime"
-                value={formData.prepTime}
+                id="preparationTime"
+                name="preparationTime"
+                value={formData.preparationTime}
                 onChange={handleChange}
                 min="0"
                 required
@@ -212,9 +310,9 @@ export function RecipeForm() {
               <label>Cooking Time (minutes)*</label>
               <input
                 type="number"
-                id="cookTime"
-                name="cookTime"
-                value={formData.cookTime}
+                id="cookingTime"
+                name="cookingTime"
+                value={formData.cookingTime}
                 onChange={handleChange}
                 min="0"
                 required
@@ -271,7 +369,7 @@ export function RecipeForm() {
           </section>
 
           <section className="ingredients">
-            <h3>Ingredients</h3>
+            <h3>Ingredients*</h3>
             {formData.ingredients.map((ingredient, index) => (
               <div key={index} className="ingredient-row">
                 <input
@@ -281,6 +379,7 @@ export function RecipeForm() {
                   onChange={(e) =>
                     handleIngredientChange(index, "name", e.target.value)
                   }
+                  required
                 />
                 <input
                   type="number"
@@ -289,6 +388,7 @@ export function RecipeForm() {
                     handleIngredientChange(index, "quantity", e.target.value)
                   }
                   min="0"
+                  required
                 />
                 <select
                   id="unit"
@@ -322,9 +422,7 @@ export function RecipeForm() {
                 </label>
               </div>
             ))}
-            <button type="button" onClick={addIngredient}>
-              + Add Ingredient
-            </button>
+            <Button label="+ Add Ingredient" type="button" onClick={addIngredient}/>
           </section>
 
           <section className="instructions">
@@ -344,14 +442,10 @@ export function RecipeForm() {
                   }}
                   placeholder="Describe this step"
                 />
-                <button disabled={true} type="button">
-                  + Add Image
-                </button>
+                <Button label="+ Add Image" type="button"/>
               </div>
             ))}
-            <button type="button" onClick={addInstruction}>
-              + Add Step
-            </button>
+            <Button label="+ Add Step" type="button" onClick={addInstruction}/>
           </section>
 
           <section className="additional-information">
@@ -393,12 +487,13 @@ export function RecipeForm() {
 
           <div className="form-actions">
             <Button disabled={true} type="button" label="Save as Draft" />
-            <Button primary={true} type="submit" label="Publish Recipe" />
+            <Button primary={true} type="submit" label="Publish Recipe" disabled={isLoading} > {isLoading ? 'Adding...' : 'Add Recipe'}</Button>
           </div>
         </form>
       </div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }
 
-export default RecipeForm;
+export default Form;
