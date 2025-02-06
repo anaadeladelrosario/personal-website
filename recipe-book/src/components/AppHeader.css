@@ -85,7 +85,7 @@
  
         .header {
         flex-wrap: wrap; /* Allow wrapping of children to next line */
-        height: 250px;
+        height: 150px;
        
         }
         .header-left{
@@ -94,13 +94,13 @@
         .header-center{
             flex: 1 1 50%;
             position:relative;
-           top:20px;
+           /* top:20px; */
            margin:0;
         }
 
         .header-right{
             position:relative;
-            bottom:110px;
+            bottom:55px;
 
         }
 

@@ -43,6 +43,6 @@ const StyledButton = styled.button<ButtonProps>`
   width: ${(props) => (props.size === 'small' ? 'fit-content' : props.size === 'large' ? '100%' : 'fit-content')};
   font-size: ${(props) => (props.size === 'small' ? '12px' : props.size === 'large' ? '16px' : '14px')};
   background-color: ${(props) => (props.primary ? 'var(--color-accent)' : 'var(--color-primary)')};
-  margin: var(--space-md);
+  margin: var(--space-xs);
   cursor: pointer;
 `;

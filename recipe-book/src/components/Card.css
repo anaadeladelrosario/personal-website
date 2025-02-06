@@ -1,7 +1,7 @@
 .book-container {
   min-height: 100vh;
   position: relative;
-  width: 95%;
+  width: 100%;
 }
 
 .gingham-bg {
@@ -21,7 +21,7 @@
   background-size: 30px 30px;
   background-position: 0 0, 15px 15px;
   min-height: 100vh;
-  padding: var(--space-xl);
+  /* padding: var(--space-xl); */
 }
 
 .index-card {

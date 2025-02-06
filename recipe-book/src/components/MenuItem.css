@@ -18,7 +18,6 @@
 
 .menu-item:hover .menu-item-label {
     color: var(--color-primary);
-    font-weight: bold;
 }
 
 .menu-item:hover .menu-item-icon {

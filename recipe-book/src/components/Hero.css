@@ -8,9 +8,9 @@
                 transparent 0);
     background-size: 30px 30px;
     background-position: 0 0, 15px 15px;
-    padding: var(--space-4);     /* Adjust padding as needed */
+  /*   padding: var(--space-4);     Adjust padding as needed */
     min-height: 100vh;     /* Ensure the hero section takes full viewport height */
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -20,8 +20,8 @@
 .hero-section {
     position: relative;     /* This makes the container a reference for absolute positioning */
     display: inline-block;     /* Makes the container shrink to fit the image */
-    margin-bottom: var(--space-xl);
-    width: 90%;
+    /* margin-bottom: var(--space-xl); */
+    width: 100%;
 }
 
 .hero-image {
@@ -51,7 +51,7 @@
     }
 
     .hero-image {
-        height: 200px;
+        /* height: 200px; */
         width: 100%;
     }
 }
