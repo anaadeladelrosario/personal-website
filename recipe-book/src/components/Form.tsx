@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Form.css";
 import { Button } from "./Button";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 export enum Cuisine {
   Australian = "Australian",
@@ -129,6 +131,10 @@ export function Form() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
+  // Edit mode
+  const { recipeId } = useParams(); // Get recipeId from the URL params
+  const navigate = useNavigate(); // To navigate after submission
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -172,6 +178,23 @@ export function Form() {
     }));
   };
 
+  // Handle form submission (update recipe)
+  const handleUpdate = async () => {
+    if (recipeId) {
+      try {
+        const response = await axios.put(`https://localhost:44369/api/Recipe/${recipeId}`, formData);
+
+        if (response.status === 200) {
+         console.log('Recipe updated successfully');
+          // Navigate to the success page
+          navigate(`/Recipe/${recipeId}`);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  };
+
   const handleSubmitTest = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Recipe submitted:", formData);
@@ -183,6 +206,10 @@ export function Form() {
     setIsLoading(true);
     setError('');
 
+    if(recipeId) {
+      handleUpdate();
+      navigate(`/Recipe/${recipeId}`);
+    } else {
     try {
       const response = await fetch('https://localhost:44369/api/Recipe', {
         method: 'POST',
@@ -214,13 +241,46 @@ export function Form() {
         cookingTime: 0,
         servings: 0,
       });  // Reset form state after successful submit
+      navigate('/');
     } catch (err) {
       setError('An error occurred while adding the recipe.');
       console.error(err);
     } finally {
       setIsLoading(false);
     }
+  }
   };
+
+    // Fetch recipe data when the component mounts
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      if (recipeId) {
+        try {
+          const response = await axios.get(`https://localhost:44369/api/Recipe/${recipeId}`);
+           setFormData({
+        title: response.data.title,
+        ingredients:response.data.ingredients.$values,
+        instructions:response.data.instructions.$values,
+        cuisine: response.data.cuisine,
+        category: response.data.category,
+        difficulty: response.data.difficulty,
+        costRange: response.data.costRange,
+        notes: response.data.notes,
+        tags: response.data.tags,
+        isVegetarian: response.data.isVegetarian,
+        description: response.data.description,
+        preparationTime: response.data.preparationTime,
+        cookingTime: response.data.cookingTime,
+        servings: response.data.servings,
+      });
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+    };
+
+    fetchRecipe();
+  }, [recipeId]);
 
   return (
     <div className="gingham-bg">
@@ -241,7 +301,6 @@ export function Form() {
                 required
               />
             </div>
-
             <div className="form-group">
               <label>Description</label>
               <textarea

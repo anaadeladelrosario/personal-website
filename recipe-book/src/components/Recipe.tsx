@@ -79,26 +79,37 @@ export const Recipe : React.FC = () => {
     }
   };
 
+  const handleEdit = (id: number | string) => {
+    if (recipeId) {
+      navigate(`/edit/${id}`);
+    }
+  };
+
     return recipeId ? (
     <div className="gingham-bg">
       <div className="hero-section">
         <img src={spices} alt="Hero Image" className="hero-image" />
           <h1 className="book-title">{recipeId?.title}</h1>
       </div>
-       <div style={{  maxWidth: "800px", width: '90%', padding: 'var(--space-md)', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-warning)', margin: 'var(--space-sm)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '10px' }} className="button-section">
+      <div style={{backgroundColor:'var(--color-warning)', padding:'var(--space-xs)'}}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'right', }}>
+         <Button size="small" primary label="Remove" onClick={()=> id && handleDelete(id)} />
+         <Button size="small" primary label="Edit" onClick={()=> id && handleEdit(id)} />
+        </div>
+       <div style={{  borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-warning)', margin: 'var(--space-xs)', padding:'var(--space-xs)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'left', gap: '10px' }} className="button-section">
          <p>{recipeId.description}</p> 
-            <Button size="small" primary label="Remove" onClick={()=> id && handleDelete(id)} />
         </div>
         <RecipeDiv>
-       <div style={{ flex: '1 1 300px', backgroundColor: 'white',borderRadius: 'var(--radius-lg)', padding: 'var(--space-xl)', boxShadow: 'var(--shadow-md)', maxWidth: '800px', margin: '0 auto' }}>
+       <div style={{ flex: '1 1 300px', backgroundColor: 'white',borderRadius: 'var(--radius-lg)', padding: 'var(--space-xl)', boxShadow: 'var(--shadow-md)', maxWidth: '800px' }}>
         <IngredientsList ingredients={recipeId.ingredients.$values} />
       </div>
-      <div style={{ flex: '1 1 300px', backgroundColor: 'white',borderRadius: 'var(--radius-lg)', padding: 'var(--space-xl)', boxShadow: 'var(--shadow-md)', maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ flex: '1 1 300px', backgroundColor: 'white',borderRadius: 'var(--radius-lg)', padding: 'var(--space-xl)', boxShadow: 'var(--shadow-md)', maxWidth: '800px' }}>
         <InstructionCard instructions={recipeId.instructions.$values} />
       </div>
         </RecipeDiv>
-      
+      </div>
    </div>
+
     ):(<>{Error}</>)
 }
 
@@ -109,8 +120,8 @@ const RecipeDiv = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
-  padding: 20px;
-  width: 90%;
+  padding: var(--space-xs);
+  width: 100%;
   max-width: 1024px;
   margin: 0 auto;
 
