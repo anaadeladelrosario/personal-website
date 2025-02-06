@@ -6,6 +6,7 @@ import IngredientsList from './IngredientsList';
 import InstructionCard from './InstructionCard';
 import styled from 'styled-components';
 import { Button } from './Button';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
 
 export interface InstructionsProps {
   id?: number,
@@ -44,6 +45,7 @@ export interface Recipe {
 export const Recipe : React.FC = () => {
    const { id } = useParams<{ id: string }>(); // Extract the `id` from the URL
    const [recipeId, setRecipeItemId] = useState<Recipe | null>(null);
+   const navigate = useNavigate(); // Initialize the navigation function
 
     useEffect(() => {
         axios.get<Recipe>(`https://localhost:44369/api/Recipe/${id}`)
@@ -55,6 +57,28 @@ export const Recipe : React.FC = () => {
             });
     }, [id]);
 
+    const deleteProduct = async (id: number | string) => {
+    try {
+      const response = await  axios.delete<Recipe>(`https://localhost:44369/api/Recipe/${id}`);
+
+      if (response.status === 200) {
+        console.log(`OK`);
+         navigate('/');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleDelete = (id: number | string) => {
+    if (recipeId) {
+      deleteProduct(id);
+      console.log(`Recipe ${recipeId?.title} deleted`);
+    } else {
+      console.log('Please provide a valid product ID');
+    }
+  };
+
     return recipeId ? (
     <div className="gingham-bg">
       <div className="hero-section">
@@ -63,7 +87,7 @@ export const Recipe : React.FC = () => {
       </div>
        <div style={{  maxWidth: "800px", width: '90%', padding: 'var(--space-md)', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-warning)', margin: 'var(--space-sm)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '10px' }} className="button-section">
          <p>{recipeId.description}</p> 
-            <Button size="small" primary label="Remove" />
+            <Button size="small" primary label="Remove" onClick={()=> id && handleDelete(id)} />
         </div>
         <RecipeDiv>
        <div style={{ flex: '1 1 300px', backgroundColor: 'white',borderRadius: 'var(--radius-lg)', padding: 'var(--space-xl)', boxShadow: 'var(--shadow-md)', maxWidth: '800px', margin: '0 auto' }}>
