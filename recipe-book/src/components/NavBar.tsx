@@ -6,11 +6,6 @@ import styled from "styled-components";
 
 const menuItems: MenuItemProps[] = [
   { label: 'Home', icon: Home01Icon },
-  { label: 'Recipes', subItems: [
-    { label: 'Aussie Pie' },
-    { label: 'Cuban Flan' },
-    { label: 'Swedish Meatballs' },
-  ] },
   { label: 'Add Recipe', icon: Add01Icon },
   { label: 'Shopping List', icon: ShoppingBag01Icon },
   { label: 'Settings', icon: Settings01Icon },
