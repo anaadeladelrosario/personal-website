@@ -19,7 +19,7 @@ export interface IngredientProps {
   id?: number,
   quantity: number,
   name: string,
-  unit: string,
+  unit: string, 
   optional: boolean,
   preparation: string | null,
 }
