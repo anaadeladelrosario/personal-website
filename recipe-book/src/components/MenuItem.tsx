@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import "./MenuItem.css";
 import "../styles/design-system.css";
 import { Link, useLocation } from "react-router-dom";
+import { convertStringToLink, handleClickOutside, toggleSubMenu } from "../utils/MenuItemUtils";
 
 export interface MenuItemProps {
   label: string;
@@ -18,36 +19,29 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   const [openSubMenus, setOpenSubMenus] = useState<string[]>([]);
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const location = useLocation();
-
-  const toggleSubMenu = (label: string) => {
-    setOpenSubMenus((prev: string[]) =>
-      prev.includes(label)
-        ? prev.filter((item) => item !== label)
-        : [...prev, label]
-    );
-  };
-
+  const menuRef = React.useRef<HTMLDivElement>(null);
   const IconComponent = icon;
   const hasSubItems = subItems && subItems.length > 0;
 
-  const convertStringToLink = (label: string) => {
-    return label.replace(/\s+/g, "-").toLowerCase();
-  };
-
   useEffect(() => {
-    // Update active item based on current path
-    const currentPath = location.pathname.substring(1) || 'home';
+    const currentPath = location.pathname.substring(1) || 'home'; // Update active item based on current path
     const itemPath = convertStringToLink(label);
-    
-       // Check if the current path exactly matches this item or its direct subitems
        const isDirectMatch = 
        currentPath === itemPath || 
-       subItems.some(subItem => convertStringToLink(subItem.label) === currentPath);
+       subItems.some(subItem => convertStringToLink(subItem.label) === currentPath); // Check if the current path exactly matches this item or its direct subitems
      
      setActiveItem(isDirectMatch ? label : null);
   }, [location.pathname, label, subItems]);
 
+   
+   useEffect(() => {
+    document.addEventListener('mousedown', (event) => handleClickOutside(event, menuRef, setOpenSubMenus));
+    return () => {
+      document.removeEventListener('mousedown', (event) => handleClickOutside(event, menuRef, setOpenSubMenus)); // Cleanup
+    };
+  }, []);
 
+ 
 
   const renderMenuItemWithSubItems = (
     label: string,
@@ -56,17 +50,15 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   ) => {
     const isSubMenuOpen = openSubMenus.includes(label);
     const paddingLeft = `${depth * 1.5}rem`;
-   
-
     return (
-      <>
+      <div className="menu-item-container" ref={menuRef}>
         {subItems.length > 0 ? (
           <>
           <div
             key={uuidv4()}
             className={`menu-item ${activeItem === label ? 'active' : ''}`}
             onClick={() => {
-              toggleSubMenu(label);
+              toggleSubMenu(label, setOpenSubMenus);
             }}
           >
             {IconComponent && <IconComponent className="menu-item-icon" />}
@@ -91,12 +83,11 @@ export const MenuItem: React.FC<MenuItemProps> = ({
            className={`menu-item ${activeItem === label ? 'active' : ''}`}
            style={{ paddingLeft }} 
         >
-           {/* {IconComponent && <IconComponent className="menu-item-icon" />} */}
            <span className="menu-item-label">{label}</span>
         </Link> 
         )
        }
-      </>)};
+      </div>)};
 
   return (
     <div key={uuidv4()}>

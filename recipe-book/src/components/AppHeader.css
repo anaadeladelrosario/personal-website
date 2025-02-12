@@ -1,4 +1,4 @@
-/* .header {
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,7 +8,7 @@
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-} */
+}
 
 /* .header-left {
   display: flex;
@@ -84,7 +84,7 @@
 @media (min-width: 1024px) {
  
         .header {
-          height: var(--space-2xl);
+          /* height: var(--space-2xl); */
         flex-wrap: wrap; /* Allow wrapping of children to next line */
         }
         /* .header-left{
@@ -116,7 +116,7 @@
         flex: 0 0 10%;
     }
     .header-center{
-        flex: 0 0 50%;
+        flex: 0 0 40%;
        /* top:20px; */
        /* margin:0; */
     }

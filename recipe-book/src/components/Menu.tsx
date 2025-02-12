@@ -59,6 +59,6 @@ const MenuDiv = styled.div`
   top: 100%;
   left: 0;
   height: 100vh;
-  border: 1px solid var(--color-primary);
+  // border: 1px solid var(--color-primary);
   }
 `;
