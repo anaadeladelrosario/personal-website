@@ -8,12 +8,11 @@
     grid-template-columns: 24px 1fr auto;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem;
     text-decoration: none;
     color: var(--color-text);
     cursor: pointer;
-    padding: 10px 15px;
-   
+    padding: var(--space-lg);
+    max-width: max-content; /* Allow content to determine width */
 }
 
 .menu-item:hover .menu-item-label {
@@ -25,11 +24,11 @@
 }
 
 /* Icon sizing for consistency */
-.menu-item-icon {
+/* .menu-item-icon {
     width: 20px;
     height: 20px;
     color: var(--color-accent);
-}
+} */
 
 /* Creates an empty space when no icon is present
      This ensures alignment consistency between items with and without icons */
@@ -54,9 +53,9 @@
 
 /* Position arrow indicator in the last column
      Only appears for items with submenus */
-.menu-item-arrow {
+/* .menu-item-arrow {
     grid-column: 3;
-}
+} */
 
 .menu-item:hover {
     background-color: rgba(0, 0, 0, 0.05);
@@ -67,8 +66,6 @@
 }
 
 .menu-item-arrow {
-    display: inline-block;
-    transition: transform 0.3s ease;
     margin-left: 0.5rem;
     font-size: 0.8rem;
 }
@@ -96,26 +93,27 @@
     /* Hides scrollbar for Webkit browsers (Chrome, Safari) */
 }
 
-.submenu-item {
-    color: #666;
-    text-decoration: none;
-    font-size: 1rem;
-    /* padding: 0.4rem 0; */
-    display: block;
-    transition: color 0.2s ease;
-}
-
-.submenu-item:hover {
-    color: #e57373;
+.menu-item-container {
+    position: relative; /* Create positioning context */
+    width: 100%;
 }
 
 @media (min-width:1024px){
-
-
+    .submenu {
+        position: absolute;
+    }
 .submenu.open {
     position: absolute; /* Take the child div out of the flow */
     background-color: rgba(0, 0, 0, 0.25);
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    max-height: 1000px;
 }
+
+nav ul ul li {
+    width: 170px;
+    float: none;
+    display: list-item;
+    position: relative;
+  }
 }

@@ -1,5 +1,6 @@
 import { MenuItem, MenuItemProps } from "./MenuItem";
 import "./Menu.css";
+import "../styles/design-system.css";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { useState } from "react";
@@ -57,6 +58,7 @@ const MenuDiv = styled.div`
    background-color: var(--color-secondary);
   top: 100%;
   left: 0;
-  width: 250px;
+  height: 100vh;
+  border: 1px solid var(--color-primary);
   }
 `;

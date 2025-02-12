@@ -4,17 +4,17 @@
     padding: 0;
     margin: 0;
 }
-
+/* 
 .menu-list li {
     margin-bottom: var(--space-sm);
-}
+} */
 
 @media (max-width: 1023px) { /*Smaller than or equal*/
     .menu-content {
         position: absolute;
         top: 100%;
         left: 0;
-        width: 250px;
+        /* width: 250px; */
         z-index: var(--z-dropdown);
     }
 }
@@ -31,7 +31,7 @@
         gap: var(--space-lg);
     }
 
-    .menu-list li {
+    /* .menu-list li {
         margin-bottom: 0;
-    }
+    } */
 }

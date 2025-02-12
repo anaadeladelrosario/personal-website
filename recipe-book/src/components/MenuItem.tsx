@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./MenuItem.css";
+import "../styles/design-system.css";
 import { Link } from "react-router-dom";
 
 export interface MenuItemProps {
@@ -37,10 +38,10 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     depth: number = 0
   ) => {
     const isSubMenuOpen = openSubMenus.includes(label);
-    const paddingLeft = `${depth * 1}rem`;
+    const paddingLeft = `${depth * 1.5}rem`;
 
     return (
-      <>
+      <div className="menu-item-container">
         {subItems.length > 0 ? (
           <>
           <div
@@ -49,7 +50,6 @@ export const MenuItem: React.FC<MenuItemProps> = ({
             onClick={() => {
               toggleSubMenu(label);
             }}
-            style={{ paddingLeft }}
           >
             {IconComponent && <IconComponent className="menu-item-icon" />}
             <span className="menu-item-label">{label}</span>
@@ -61,7 +61,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
               </span>
             )}
           </div>
-          <div className={`submenu ${isSubMenuOpen ? 'open' : ''}`}>
+          <div className={`submenu ${isSubMenuOpen ? "open" : ""}`}>
           {subItems?.map(subItem => renderMenuItemWithSubItems(subItem.label, subItem.subItems|| [], depth + 1))}
         </div></>):( 
           <Link
@@ -71,13 +71,15 @@ export const MenuItem: React.FC<MenuItemProps> = ({
               : `/${convertStringToLink(label)}`
           }
            className="menu-item"
+           style={{ paddingLeft }} 
         >
-           {IconComponent && <IconComponent className="menu-item-icon" />}
+           {/* {IconComponent && <IconComponent className="menu-item-icon" />} */}
            <span className="menu-item-label">{label}</span>
-        </Link>
+        </Link> 
+         
         )
        }
-      </>)};
+      </div>)};
 
   return (
     <div key={uuidv4()}>
