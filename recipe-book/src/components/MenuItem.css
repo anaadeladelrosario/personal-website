@@ -11,12 +11,18 @@
     text-decoration: none;
     color: var(--color-text);
     cursor: pointer;
-    padding: var(--space-lg);
+    padding: var(--space-xs) var(--space-xs) var(--space-sm) var(--space-xs);
     max-width: max-content; /* Allow content to determine width */
 }
 
-.menu-item:hover .menu-item-label {
-    color: var(--color-primary);
+
+.menu-item.active  {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-md) var(--radius-md) 0px 0px;
+}
+
+.menu-item.active .menu-item-icon {
+    fill: var(--color-primary);
 }
 
 .menu-item:hover .menu-item-icon {
@@ -93,10 +99,10 @@
     /* Hides scrollbar for Webkit browsers (Chrome, Safari) */
 }
 
-.menu-item-container {
-    position: relative; /* Create positioning context */
+/* .menu-item-container {
+    position: relative;
     width: 100%;
-}
+} */
 
 @media (min-width:1024px){
     .submenu {
@@ -109,11 +115,4 @@
     z-index: 1;
     max-height: 1000px;
 }
-
-nav ul ul li {
-    width: 170px;
-    float: none;
-    display: list-item;
-    position: relative;
-  }
 }

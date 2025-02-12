@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import './AppHeader.css';
+import '../styles/design-system.css';
 import NavBar from './NavBar';
 
 interface AppHeaderProps {
@@ -17,7 +18,7 @@ export const AppHeader: FC<AppHeaderProps> = ({ username, onLogout }) => {
       </div>
       
       <div className="header-center">
-        <div className="search-container">
+        <div className="container search-container">
           <input style={{ padding: '1%' }}
             type="text"
             className="search-input"
