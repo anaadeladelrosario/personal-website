@@ -27,20 +27,24 @@ a:hover {
 h1 {
   font-family: var(--font-primary);
   font-size: var(--text-3xl);
-  line-height: 1.1;
+  line-height: 1.5;
+  color: var(--color-accent);
 }
 
 h2{
   font-family: var(--font-primary);
   font-size: var(--text-2xl);
-  line-height: 1.1;
+  line-height: 1.5;
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
 }
 
 h3{
   font-family: var(--font-primary);
   font-size: var(--text-xl);
-  line-height: 1.1;
+  line-height: 1.5;
   padding-top: var(--space-xl);
+  color: var(--color-accent);
 }
 
 button {
@@ -69,6 +73,25 @@ button:focus-visible {
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+section {
+  background-color: var(--color-warning);
+  margin: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding: var(--space-md) var(--space-lg); */
+  background-color: var(--color-secondary);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
 }
 
 @media (prefers-color-scheme: light) {
