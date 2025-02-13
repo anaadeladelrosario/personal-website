@@ -11,7 +11,7 @@
     text-decoration: none;
     color: var(--color-text);
     cursor: pointer;
-    padding: var(--space-xs) var(--space-xs) var(--space-sm) var(--space-xs);
+    padding: var(--space-xs) var(--space-xs) var(--space-sm) var(--space-sm);
     max-width: max-content; /* Allow content to determine width */
     border-radius: var(--radius-md);
 }

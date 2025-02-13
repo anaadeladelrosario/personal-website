@@ -49,7 +49,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     depth: number = 0
   ) => {
     const isSubMenuOpen = openSubMenus.includes(label);
-    const paddingLeft = `${depth * 1.5}rem`;
+    const paddingLeft = `${depth * 0.5}rem`;
     return (
       <div className="menu-item-container" ref={menuRef}>
         {subItems.length > 0 ? (
