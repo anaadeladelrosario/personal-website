@@ -1,23 +1,25 @@
-import { RecipeProps } from "../components/RecipeIndex";
+import { RecipeProps } from "../components/interfaces/Recipe";
 
 export function organizeRecipesByCategory(recipes: RecipeProps[]) {
-    // Group recipes by category
-    const groupedRecipes = recipes.reduce((acc, recipe) => {
-        if (!acc[recipe.category]) {
-            acc[recipe.category] = [];
-        }
-        acc[recipe.category].push(recipe);
-        return acc;
-    }, {} as { [key: string]: RecipeProps[] });
+  // Group recipes by category
+  const groupedRecipes = recipes.reduce((acc, recipe) => {
+    if (!acc[recipe.category]) {
+      acc[recipe.category] = [];
+    }
+    acc[recipe.category].push(recipe);
+    return acc;
+  }, {} as { [key: string]: RecipeProps[] });
 
-    // Sort categories alphabetically
-    const sortedCategories = Object.keys(groupedRecipes).sort();
+  // Sort categories alphabetically
+  const sortedCategories = Object.keys(groupedRecipes).sort();
 
-    // Sort recipes within each category alphabetically
-    const organizedRecipes = sortedCategories.map(category => ({
-        category,
-        recipes: groupedRecipes[category].sort((a, b) => a.title.localeCompare(b.title))
-    }));
+  // Sort recipes within each category alphabetically
+  const organizedRecipes = sortedCategories.map((category) => ({
+    category,
+    recipes: groupedRecipes[category].sort((a, b) =>
+      a.title.localeCompare(b.title)
+    ),
+  }));
 
-    return organizedRecipes;
+  return organizedRecipes;
 }
