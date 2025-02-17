@@ -1,96 +1,83 @@
-/* Gingham pattern background */
-.gingham-bg {
-    background-image: linear-gradient(90deg,
-                rgba(214, 79, 41, 0.4) 50%,
-                transparent 0),
-            linear-gradient(0deg,
-                rgba(214, 79, 41, 0.4) 50%,
-                transparent 0);
-    background-size: 30px 30px;
-    background-position: 0 0, 15px 15px;
-  /*   padding: var(--space-4);     Adjust padding as needed */
-    min-height: 100vh;     /* Ensure the hero section takes full viewport height */
-    /* display: flex; */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
 .hero-section {
-    position: relative;     /* This makes the container a reference for absolute positioning */
-    display: inline-block;     /* Makes the container shrink to fit the image */
-    /* margin-bottom: var(--space-xl); */
-    width: 100%;
+  position: relative;
+  text-align: left;
+  color: white;
+  margin-bottom: var(--space-sm);
 }
 
 .hero-image {
-    width: 100%;     /* Make the image responsive */
-    height: auto;   /* Maintain aspect ratio */
-    object-fit: cover; /* Ensure the image covers the entire container */
+  width: 100%; /* Make the image responsive */
 }
 
+.content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: var(--space-sm);
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+  color: white;
+  width: 100%;
+  padding: var(--space-sm);
+}
 
 .book-title {
-    font-family: var(--font-primary);
-    font-size: var(--text-3xl);
-    color: var(--color-accent);
-    background-color: var(--color-accent);
-    padding: var(--space-md) var(--space-lg);
-    display: inline-block;
-    position: absolute;     /* Position the title over the image */
-    bottom: 0px;     /* Distance from the bottom of the image */
-    left: 0px;     /* Distance from the left of the image */
-    color: white;     /* Title color */
-    font-size: 2em;     /* Adjust title size as needed */
+  color: var(--color-border); /* Title color */
+}
+
+.book-subtitle {
+  color: var(--color-border);
+}
+
+.book-title {
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.book-subtitle {
+  padding: 0 var(--space-sm);
 }
 
 @media (min-width: 1024px) {
-    .book-section {
-        margin-bottom: var(--space-xl);
-    }
+  .book-section {
+    margin-bottom: var(--space-xl);
+  }
 
-    .hero-image {
-        /* height: 200px; */
-        width: 100%;
-    }
+  .hero-image {
+    width: 100%;
+  }
 }
 
 /* Adjust background size on smaller screens */
 @media (max-width: 768px) {
-    .gingham-bg {
-        background-size: 20px 20px; 
-        /* Smaller pattern on mobile devices */
-    }
+  .gingham-bg {
+    background-size: 20px 20px; /* Smaller pattern on mobile devices */
+  }
 
-    .book-title {
-        font-size: 1.5em;
-        /* Smaller title on smaller screens */
-    }
+  .book-title {
+    font-size: 1.5em; /* Smaller title on smaller screens */
+  }
 
-    .book-section {
-        margin-bottom: var(--space-md);
-    }
+  .book-section {
+    margin-bottom: var(--space-md);
+  }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
-    .book-section {
-        margin-bottom: var(--space-xs);
-    }
+  .book-section {
+    margin-bottom: var(--space-xs);
+  }
 }
 
 @media (max-width: 480px) {
-    .gingham-bg {
-        background-size: 15px 15px;
-        /* Further smaller pattern for extra small screens */
-    }
+  .gingham-bg {
+    background-size: 15px 15px; /* Further smaller pattern for extra small screens */
+  }
 
-    .book-title {
-        font-size: 1.2em;
-        /* Smaller title on smaller screens */
-    }
+  .book-title {
+    font-size: 1.2em; /* Smaller title on smaller screens */
+  }
 
-    .book-section {
-        margin-bottom: var(--space-xs);
-    }
+  .book-section {
+    margin-bottom: var(--space-xs);
+  }
 }

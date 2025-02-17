@@ -1,21 +1,39 @@
-import spices from '../assets/spices.jpg'
-import { Card } from "./Card"
-import './Hero.css'
-import { RecipeIndex } from './RecipeIndex';
+import { Card } from "./Card";
+import "./Hero.css";
+import "../styles/design-system.css";
 
-function Hero() {
+function Hero({
+  title,
+  subtitle,
+  image,
+  children,
+  cardTitle,
+  cardChildren,
+}: {
+  title?: string;
+  subtitle?: string;
+  image?: string;
+  children?: React.ReactNode;
+  cardTitle?: string;
+  cardChildren?: React.ReactNode;
+}) {
   return (
     <div className="gingham-bg">
       <div className="hero-section">
-        <img src={spices} alt="Hero Image" className="hero-image" />
-          <h1 className="book-title">Your Recipe Book</h1>
-      </div>
-       <div style={{  padding: 'var(--space-md)', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-warning)', margin: 'var(--space-sm)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '10px' }} className="button-section">
-          <p>Check the menu to find a list of recipes or press add button to add a new recipe.</p>
+        {image && <img src={image} alt="Hero Image" className="hero-image" />}
+        <div className="content">
+          {children}
+          <h1 className="book-title">{title}</h1>
+          {subtitle && <p className="book-subtitle">{subtitle}</p>}
         </div>
-      <Card children={<RecipeIndex />} />
+      </div>
+      {cardTitle || cardChildren ? (
+        <Card title={cardTitle} children={cardChildren} />
+      ) : (
+        <></>
+      )}
     </div>
-  )
+  );
 }
 
-export default Hero
+export default Hero;
