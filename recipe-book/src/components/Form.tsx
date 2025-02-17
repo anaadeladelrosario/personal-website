@@ -1,113 +1,23 @@
 import { useEffect, useState } from "react";
 import "./Form.css";
+import "../styles/design-system.css";
 import { Button } from "./Button";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
-export enum Cuisine {
-  Australian = "Australian",
-  Brazilian = "Brazilian",
-  Chinese = "Chinese",
-  Cuban = "Cuban",
-  Italian = "Italian",
-  Japanese = "Japanese",
-  Spanish = "Spanish",
-  Swedish = "Swedish"
-}
-const cuisines = [
-  Cuisine.Australian,
-  Cuisine.Brazilian,
-  Cuisine.Chinese,
-  Cuisine.Cuban,
-  Cuisine.Italian,
-  Cuisine.Japanese,
-  Cuisine.Spanish,
-  Cuisine.Swedish,
-];
-export enum Categories {
-  Appetizer = "Appetizer",
-  MainCourse = "MainCourse",
-  Dessert = "Dessert",
-  Snack = "Snack",
-}
-const categories = [
-  Categories.Appetizer,
-  Categories.MainCourse,
-  Categories.Dessert,
-  Categories.Snack,
-];
-
-export enum Difficulty {
-  Easy = "Easy",
-  Medium = "Medium",
-  Hard = "Hard",
-}
-const difficulties = [Difficulty.Easy, Difficulty.Medium, Difficulty.Hard];
-
-export enum CostRange {
-  Budget = "Budget",
-  Moderate = "Moderate",
-  Expensive = "Expensive",
-}
-const costRanges = [CostRange.Budget, CostRange.Moderate, CostRange.Expensive];
-
-export enum Units {
-  Gram = "g",
-  Kilogram = "kg",
-  Milliliter = "ml",
-  Liter = "l",
-  Ounce = "oz",
-  Pound = "lb",
-  Pinch = "pinch",
-  Teaspoon = "tsp",
-  Tablespoon = "tbsp",
-  Cup = "cup",
-  Pint = "pint",
-  Quart = "quart",
-  Gallon = "gallon",
-}
-const units = [
-  Units.Gram,
-  Units.Kilogram,
-  Units.Milliliter,
-  Units.Liter,
-  Units.Ounce,
-  Units.Pound,
-  Units.Pinch,
-  Units.Teaspoon,
-  Units.Tablespoon,
-  Units.Cup,
-  Units.Pint,
-  Units.Quart,
-  Units.Gallon,
-]
-
-interface FormData {
-  title: string;
-  description: string;
-  category: Categories;
-  cuisine: Cuisine;
-  preparationTime: number;
-  cookingTime: number;
-  servings: number;
-  difficulty: Difficulty;
-  costRange: CostRange;
-  ingredients: {
-    name: string;
-    quantity: number;
-    unit: Units;
-    optional: boolean;
-    preparation?: string;
-  }[];
-  instructions: {
-    step: number;
-    description: string;
-    image?: string;
-  }[];
-  tags: string[];
-  isVegetarian: boolean;
-  notes: string;
-}
+import {
+  categories,
+  Categories,
+  CostRange,
+  costRanges,
+  Cuisine,
+  cuisines,
+  difficulties,
+  Difficulty,
+  units,
+  Units,
+} from "./enums/formEnums";
+import { FormData } from "./interfaces/Form";
+import small from "../assets/small.jpg";
 
 export function Form() {
   const [formData, setFormData] = useState<FormData>({
@@ -120,16 +30,24 @@ export function Form() {
     servings: 2,
     difficulty: Difficulty.Easy,
     costRange: CostRange.Budget,
-    ingredients: [{ name: "", quantity: 0, unit: Units.Gram, optional: false, preparation: "" }],
+    ingredients: [
+      {
+        name: "",
+        quantity: 0,
+        unit: Units.Gram,
+        optional: false,
+        preparation: "",
+      },
+    ],
     instructions: [{ step: 1, description: "", image: "" }],
     tags: [],
     isVegetarian: false,
     notes: "",
   });
 
-    // State for tracking loading or errors
+  // State for tracking loading or errors
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
 
   // Edit mode
   const { recipeId } = useParams(); // Get recipeId from the URL params
@@ -163,7 +81,13 @@ export function Form() {
       ...prev,
       ingredients: [
         ...prev.ingredients,
-         { name: "", quantity: 0, unit: Units.Gram, optional: false, preparation: "" },
+        {
+          name: "",
+          quantity: 0,
+          unit: Units.Gram,
+          optional: false,
+          preparation: "",
+        },
       ],
     }));
   };
@@ -182,99 +106,99 @@ export function Form() {
   const handleUpdate = async () => {
     if (recipeId) {
       try {
-        const response = await axios.put(`https://localhost:44369/api/Recipe/${recipeId}`, formData);
+        const response = await axios.put(
+          `https://localhost:44369/api/Recipe/${recipeId}`,
+          formData
+        );
 
         if (response.status === 200) {
-         console.log('Recipe updated successfully');
+          console.log("Recipe updated successfully");
           // Navigate to the success page
           navigate(`/Recipe/${recipeId}`);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     }
-  };
-
-  const handleSubmitTest = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Recipe submitted:", formData);
   };
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
-    if(recipeId) {
+    if (recipeId) {
       handleUpdate();
       navigate(`/Recipe/${recipeId}`);
     } else {
-    try {
-      const response = await fetch('https://localhost:44369/api/Recipe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)  // Send the recipe object as the request body
-      });
+      try {
+        const response = await fetch("https://localhost:44369/api/Recipe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData), // Send the recipe object as the request body
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to add the recipe');
+        if (!response.ok) {
+          throw new Error("Failed to add the recipe");
+        }
+
+        const result = await response.json();
+        console.log("Recipe added:", result); // Log the response (new recipe with generated ID)
+        setFormData({
+          title: "",
+          ingredients: [],
+          instructions: [],
+          cuisine: Cuisine.Australian,
+          category: Categories.MainCourse,
+          difficulty: Difficulty.Easy,
+          costRange: CostRange.Budget,
+          notes: "",
+          tags: [],
+          isVegetarian: false,
+          description: "",
+          preparationTime: 0,
+          cookingTime: 0,
+          servings: 0,
+        }); // Reset form state after successful submit
+        navigate("/");
+      } catch (err) {
+        setError("An error occurred while adding the recipe.");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
       }
-
-      const result = await response.json();
-      console.log('Recipe added:', result);  // Log the response (new recipe with generated ID)
-      setFormData({
-        title: '',
-        ingredients: [],
-        instructions: [],
-        cuisine: Cuisine.Australian,
-        category: Categories.MainCourse,
-        difficulty: Difficulty.Easy,
-        costRange: CostRange.Budget,
-        notes: '',
-        tags: [],
-        isVegetarian: false,
-        description: "",
-        preparationTime: 0,
-        cookingTime: 0,
-        servings: 0,
-      });  // Reset form state after successful submit
-      navigate('/');
-    } catch (err) {
-      setError('An error occurred while adding the recipe.');
-      console.error(err);
-    } finally {
-      setIsLoading(false);
     }
-  }
   };
 
-    // Fetch recipe data when the component mounts
+  // Fetch recipe data when the component mounts
   useEffect(() => {
     const fetchRecipe = async () => {
       if (recipeId) {
         try {
-          const response = await axios.get(`https://localhost:44369/api/Recipe/${recipeId}`);
-           setFormData({
-        title: response.data.title,
-        ingredients:response.data.ingredients.$values,
-        instructions:response.data.instructions.$values,
-        cuisine: response.data.cuisine,
-        category: response.data.category,
-        difficulty: response.data.difficulty,
-        costRange: response.data.costRange,
-        notes: response.data.notes,
-        tags: response.data.tags,
-        isVegetarian: response.data.isVegetarian,
-        description: response.data.description,
-        preparationTime: response.data.preparationTime,
-        cookingTime: response.data.cookingTime,
-        servings: response.data.servings,
-      });
+          const response = await axios.get(
+            `https://localhost:44369/api/Recipe/${recipeId}`
+          );
+          setFormData({
+            title: response.data.title,
+            ingredients: response.data.ingredients.$values,
+            instructions: response.data.instructions.$values,
+            cuisine: response.data.cuisine,
+            category: response.data.category,
+            difficulty: response.data.difficulty,
+            costRange: response.data.costRange,
+            notes: response.data.notes,
+            tags: response.data.tags,
+            isVegetarian: response.data.isVegetarian,
+            description: response.data.description,
+            preparationTime: response.data.preparationTime,
+            cookingTime: response.data.cookingTime,
+            servings: response.data.servings,
+          });
         } catch (error) {
-          console.error('Error:', error);
+          console.error("Error:", error);
         }
       }
     };
@@ -284,11 +208,10 @@ export function Form() {
 
   return (
     <div className="gingham-bg">
-      <div className="form-container">
+      <div className="container form-container">
         <form onSubmit={handleSubmit} className="form">
-          <section className="basic-information">
+          <section className="form-section section1">
             <h3>Basic Information</h3>
-
             <div className="form-group">
               <label>Title*</label>
               <input
@@ -311,7 +234,6 @@ export function Form() {
                 placeholder="Brief description of your recipe"
               />
             </div>
-
             <div className="form-group">
               <label>Category*</label>
               <select
@@ -329,9 +251,8 @@ export function Form() {
                 ))}
               </select>
             </div>
-
             <div className="form-group">
-              <label>Cuisine*</label>
+              <label htmlFor="cuisine">Cuisine*</label>
               <select
                 id="cuisine"
                 name="cuisine"
@@ -347,9 +268,18 @@ export function Form() {
                 ))}
               </select>
             </div>
+            <div className="form-group">
+              <label htmlFor="notes">Notes</label>
+              <textarea
+                id="notes"
+                name="notes"
+                value={formData.notes}
+                onChange={handleChange}
+                placeholder="Any additional notes about the recipe..."
+              />
+            </div>
           </section>
-
-          <section className="recipe-details">
+          <section className="form-section section2">
             <h3>Recipe Details</h3>
 
             <div className="form-group">
@@ -364,7 +294,6 @@ export function Form() {
                 required
               />
             </div>
-
             <div className="form-group">
               <label>Cooking Time (minutes)*</label>
               <input
@@ -377,7 +306,6 @@ export function Form() {
                 required
               />
             </div>
-
             <div className="form-group">
               <label>Servings*</label>
               <input
@@ -390,7 +318,6 @@ export function Form() {
                 required
               />
             </div>
-
             <div className="form-group">
               <label>Difficulty*</label>
               <select
@@ -408,7 +335,6 @@ export function Form() {
                 ))}
               </select>
             </div>
-
             <div className="form-group">
               <label htmlFor="costRange">Cost Range</label>
               <select
@@ -425,9 +351,29 @@ export function Form() {
                 ))}
               </select>
             </div>
+            <div className="form-group">
+              <label htmlFor="tags">Tags</label>
+              <input
+                type="text"
+                id="tags"
+                name="tags"
+                placeholder="Type and press Enter to add tags"
+              />
+            </div>
+            <div className="form-group">
+              <label>
+                <input
+                  type="checkbox"
+                  name="isVegetarian"
+                  checked={formData.isVegetarian}
+                  onChange={handleChange}
+                />
+                Vegetarian
+              </label>
+            </div>
           </section>
 
-          <section className="ingredients">
+          <section className="form-section section3">
             <h3>Ingredients*</h3>
             {formData.ingredients.map((ingredient, index) => (
               <div key={index} className="ingredient-row">
@@ -481,14 +427,50 @@ export function Form() {
                 </label>
               </div>
             ))}
-            <Button label="+ Add Ingredient" type="button" onClick={addIngredient}/>
+            <Button
+              style={{ alignSelf: "center" }}
+              label="+ Add Ingredient"
+              type="button"
+              onClick={addIngredient}
+            />
           </section>
 
-          <section className="instructions">
+          <section className="form-section section4">
             <h3>Instructions</h3>
             {formData.instructions.map((instruction, index) => (
               <div key={index} className="instruction-step">
                 <label>Step {instruction.step}</label>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "var(--space-sm)",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: "20%",
+                      fontWeight: "bold",
+                    }}
+                    src={small}
+                    alt={`Step ${instruction.step} Image`}
+                  />
+                  <Button
+                    style={{ borderRadius: "var(--radius-lg)" }}
+                    size="x-small"
+                    label="+"
+                    type="button"
+                    disabled={true}
+                  />
+                  <Button
+                    style={{ borderRadius: "var(--radius-lg)" }}
+                    size="x-small"
+                    label="-"
+                    type="button"
+                    disabled={true}
+                  />
+                </div>
+
                 <textarea
                   value={instruction.description}
                   onChange={(e) => {
@@ -501,56 +483,36 @@ export function Form() {
                   }}
                   placeholder="Describe this step"
                 />
-                <Button label="+ Add Image" type="button"/>
               </div>
             ))}
-            <Button label="+ Add Step" type="button" onClick={addInstruction}/>
+            <Button
+              style={{ alignSelf: "center" }}
+              label="+ Add Step"
+              type="button"
+              onClick={addInstruction}
+            />
           </section>
-
-          <section className="additional-information">
-            <h3>Additional Information</h3>
-
-            <div className="form-group">
-              <label htmlFor="tags">Tags</label>
-              <input
-                type="text"
-                id="tags"
-                name="tags"
-                placeholder="Type and press Enter to add tags"
-              />
-            </div>
-
-            <div className="form-group">
-              <label>
-                <input
-                  type="checkbox"
-                  name="isVegetarian"
-                  checked={formData.isVegetarian}
-                  onChange={handleChange}
-                />
-                Vegetarian
-              </label>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="notes">Notes</label>
-              <textarea
-                id="notes"
-                name="notes"
-                value={formData.notes}
-                onChange={handleChange}
-                placeholder="Any additional notes about the recipe..."
-              />
-            </div>
-          </section>
-
           <div className="form-actions">
-            <Button disabled={true} type="button" label="Save as Draft" />
-            <Button primary={true} type="submit" label="Publish Recipe" disabled={isLoading} > {isLoading ? 'Adding...' : 'Add Recipe'}</Button>
+            <Button secondary={true} type="reset" label="Cancel" />
+            <Button
+              primary={false}
+              disabled={true}
+              style={{ backgroundColor: "var(--color-warning)" }}
+              type="button"
+              label="Save as Draft"
+            />
+            <Button
+              primary={true}
+              type="submit"
+              label="Publish Recipe"
+              disabled={isLoading}
+            >
+              {isLoading ? "Adding..." : "Add Recipe"}
+            </Button>
           </div>
         </form>
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }

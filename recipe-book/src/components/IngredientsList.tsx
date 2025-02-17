@@ -1,13 +1,24 @@
-import React from 'react';
-import Ingredient, { IngredientProps } from './Ingredient';
-import { v4 as uuidv4 } from 'uuid';
+import React from "react";
+import Ingredient, { IngredientProps } from "./Ingredient";
+import { v4 as uuidv4 } from "uuid";
 
-const IngredientsList: React.FC<{ingredients: IngredientProps[]}> = ({ingredients}) =>{
+const IngredientsList: React.FC<{ ingredients: IngredientProps[] }> = ({
+  ingredients,
+}) => {
   return (
-    <div>
-      <h2 style={{ marginBottom: '10px' }}>Ingredients</h2>
+    <div
+      style={{
+        flex: "1 1 300px",
+        backgroundColor: "white",
+        borderRadius: "var(--radius-lg)",
+        padding: "var(--space-xl)",
+        maxWidth: "800px",
+      }}
+    >
+      <h2>Ingredients</h2>
       {ingredients.map((ingredient) => (
-        <Ingredient key={uuidv4()}
+        <Ingredient
+          key={uuidv4()}
           quantity={ingredient.quantity}
           name={ingredient.name}
           unit={ingredient.unit}
