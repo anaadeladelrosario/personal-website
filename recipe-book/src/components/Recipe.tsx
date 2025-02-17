@@ -1,117 +1,92 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import spices from '../assets/spices.jpg'
-import IngredientsList from './IngredientsList';
-import InstructionCard from './InstructionCard';
-import styled from 'styled-components';
-import { Button } from './Button';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import IngredientsList from "./IngredientsList";
+import InstructionCard from "./InstructionCard";
+import styled from "styled-components";
+import { Button } from "./Button";
+import { RecipeProps } from "./interfaces/Recipe";
+import { useNavigate } from "react-router-dom";
+import Hero from "./Hero";
+import test from "../assets/test.jpg";
 
-export interface InstructionsProps {
-  id?: number,
-  step: number,
-  description: string,
-  image: string | null,
-}
+export const Recipe: React.FC = () => {
+  const { id } = useParams<{ id: string }>(); // Extract the `id` from the URL
+  const [recipeId, setRecipeItemId] = useState<RecipeProps | null>(null);
+  const navigate = useNavigate(); // Initialize the navigation function
 
-export interface IngredientProps {
-  id?: number,
-  quantity: number,
-  name: string,
-  unit: string, 
-  optional: boolean,
-  preparation: string | null,
-}
+  useEffect(() => {
+    axios
+      .get<RecipeProps>(`https://localhost:44369/api/Recipe/${id}`)
+      .then((response) => {
+        setRecipeItemId(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching recipes:", error);
+      });
+  }, [id]);
 
-export interface Recipe {
-        id?: number;
-        title: string;
-        description: string;
-        category:string;
-        cuisine:string;
-        preparationTime: number;
-        notes: string;
-        cookingTime: number;
-        servings: number;
-        difficulty: string;
-        costRange: string;
-        instructions:InstructionsProps[];
-        ingredients:IngredientProps[];
-        tags: string[];
-        isVegetarian: boolean;
-      };
-
-export const Recipe : React.FC = () => {
-   const { id } = useParams<{ id: string }>(); // Extract the `id` from the URL
-   const [recipeId, setRecipeItemId] = useState<Recipe | null>(null);
-   const navigate = useNavigate(); // Initialize the navigation function
-
-    useEffect(() => {
-        axios.get<Recipe>(`https://localhost:44369/api/Recipe/${id}`)
-            .then(response => {
-                setRecipeItemId(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching recipes:', error);
-            });
-    }, [id]);
-
-    const deleteProduct = async (id: number | string) => {
+  const deleteProduct = async (id: number | string) => {
     try {
-      const response = await  axios.delete<Recipe>(`https://localhost:44369/api/Recipe/${id}`);
+      const response = await axios.delete<RecipeProps>(
+        `https://localhost:44369/api/Recipe/${id}`
+      );
 
       if (response.status === 200) {
         console.log(`OK`);
-         navigate('/');
+        navigate("/");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   const handleDelete = (id: number | string) => {
-    if (recipeId) {
+    if (id) {
       deleteProduct(id);
-      console.log(`Recipe ${recipeId?.title} deleted`);
+      console.log(`Recipe ${id} deleted`);
     } else {
-      console.log('Please provide a valid product ID');
+      console.log("Please provide a valid product ID");
     }
   };
 
   const handleEdit = (id: number | string) => {
-    if (recipeId) {
+    if (id) {
       navigate(`/edit/${id}`);
     }
   };
 
-    return recipeId ? (
-    <div className="gingham-bg">
-      <div className="hero-section">
-        <img src={spices} alt="Hero Image" className="hero-image" />
-          <h1 className="book-title">{recipeId?.title}</h1>
-      </div>
-      <div style={{backgroundColor:'var(--color-warning)', padding:'var(--space-xs)'}}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'right', }}>
-         <Button size="small" primary label="Remove" onClick={()=> id && handleDelete(id)} />
-         <Button size="small" primary label="Edit" onClick={()=> id && handleEdit(id)} />
-        </div>
-       <div style={{  borderRadius: 'var(--radius-md)', backgroundColor: 'var(--color-warning)', margin: 'var(--space-xs)', padding:'var(--space-xs)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'left', gap: '10px' }} className="button-section">
-         <p>{recipeId.description}</p> 
-        </div>
+  return recipeId ? (
+    <Hero
+      title={recipeId?.title}
+      subtitle={recipeId?.description}
+      image={test}
+      children={
+        <ButtonSection>
+          <Button
+            size="small"
+            label="Remove"
+            onClick={() => id && handleDelete(id)}
+          />
+          <Button
+            size="small"
+            primary
+            label="Edit"
+            onClick={() => id && handleEdit(id)}
+          />
+        </ButtonSection>
+      }
+      cardChildren={
         <RecipeDiv>
-       <div style={{ flex: '1 1 300px', backgroundColor: 'white',borderRadius: 'var(--radius-lg)', padding: 'var(--space-xl)', boxShadow: 'var(--shadow-md)', maxWidth: '800px' }}>
-        <IngredientsList ingredients={recipeId.ingredients.$values} />
-      </div>
-      <div style={{ flex: '1 1 300px', backgroundColor: 'white',borderRadius: 'var(--radius-lg)', padding: 'var(--space-xl)', boxShadow: 'var(--shadow-md)', maxWidth: '800px' }}>
-        <InstructionCard instructions={recipeId.instructions.$values} />
-      </div>
+          <IngredientsList ingredients={recipeId.ingredients.$values} />
+          <InstructionCard instructions={recipeId.instructions.$values} />
         </RecipeDiv>
-      </div>
-   </div>
-
-    ):(<>{Error}</>)
-}
+      }
+    />
+  ) : (
+    <>{Error}</>
+  );
+};
 
 export default Recipe;
 
@@ -120,12 +95,11 @@ const RecipeDiv = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
-  padding: var(--space-xs);
-  width: 100%;
-  max-width: 1024px;
-  margin: 0 auto;
+`;
 
-  @media (max-width: 600px) {
-    flex-direction: column;
-  }
+const ButtonSection = styled.div`
+  margin: var(--space-lg) var(--space-lg);
+  position: absolute;
+  top: 0;
+  right: 0;
 `;
