@@ -1,48 +1,51 @@
 :root {
   /* Colors */
-  --color-background: #FDFBF7;
-  --color-primary: #E07A5F;
-  --color-secondary: #81B29A;
-  --color-accent: #3D405B;
-  
+  --color-background: #fdfbf7;
+  --color-primary: #81b29a;
+  --color-secondary: #e07a5f;
+  --color-accent: #3d405b;
+
   /* Functional Colors */
-  --color-success: #81B29A;
-  --color-warning: #E9D2A5;
-  --color-error: #E07A5F;
-  --color-info: #98C1D9;
+  --color-success: #81b29a;
+  --color-warning: #e9d2a5;
+  --color-error: #e07a5f;
+  --color-info: #98c1d9;
 
   /* Neutral Colors */
-  --color-text: #3D405B;
-  --color-text-light: #6B6D7B;
-  --color-border: #E1E1E8;
-  --color-disabled: #9EA0A9;
+  --color-text: #3d405b;
+  --color-text-light: #6b6d7b;
+  --color-border: #e1e1e8;
+  --color-disabled: #9ea0a9;
 
   /* Typography */
-  --font-primary: 'Montserrat', sans-serif;
-  --font-body: 'Open Sans', sans-serif;
-  --font-mono: 'Roboto Mono', monospace;
+  --font-primary: "Montserrat", sans-serif;
+  --font-body: "Open Sans", sans-serif;
+  --font-mono: "Roboto Mono", monospace;
 
   /* Font Sizes */
-  --text-xs: 0.75rem;   /* 12px */
-  --text-sm: 0.875rem;  /* 14px */
-  --text-base: 1rem;    /* 16px */
-  --text-lg: 1.125rem;  /* 18px */
-  --text-xl: 1.25rem;   /* 20px */
-  --text-2xl: 1.5rem;   /* 24px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
   --text-3xl: 1.875rem; /* 30px */
 
   /* Spacing */
-  --space-xs: 0.25rem;  /* 4px */
-  --space-sm: 0.5rem;   /* 8px */
-  --space-md: 1rem;     /* 16px */
-  --space-lg: 1.5rem;   /* 24px */
-  --space-xl: 2rem;     /* 32px */
-  --space-2xl: 3rem;    /* 48px */
+  --space-xs: 0.25rem; /* 4px */
+  --space-sm: 0.5rem; /* 8px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+  --space-4xl: 6rem; /* 96px */
+  --space-5xl: 8rem; /* 128px */
 
   /* Border Radius */
-  --radius-sm: 0.25rem;  /* 4px */
-  --radius-md: 0.5rem;   /* 8px */
-  --radius-lg: 1rem;     /* 16px */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 1rem; /* 16px */
   --radius-full: 9999px;
 
   /* Shadows */
@@ -65,71 +68,9 @@
 
 /* Utility Classes */
 .container {
-  width: 100%;
-  max-width: 1200px;
+  width: clamp(350px, 50%, 1200px);
   margin: 0 auto;
   padding: 0 var(--space-md);
-}
-
-/* Typography Utilities */
-.text-xs { font-size: var(--text-xs); }
-.text-sm { font-size: var(--text-sm); }
-.text-base { font-size: var(--text-base); }
-.text-lg { font-size: var(--text-lg); }
-.text-xl { font-size: var(--text-xl); }
-.text-2xl { font-size: var(--text-2xl); }
-.text-3xl { font-size: var(--text-3xl); }
-
-/* Spacing Utilities */
-.m-xs { margin: var(--space-xs); }
-.m-sm { margin: var(--space-sm); }
-.m-md { margin: var(--space-md); }
-.m-lg { margin: var(--space-lg); }
-.m-xl { margin: var(--space-xl); }
-
-.p-xs { padding: var(--space-xs); }
-.p-sm { padding: var(--space-sm); }
-.p-md { padding: var(--space-md); }
-.p-lg { padding: var(--space-lg); }
-.p-xl { padding: var(--space-xl); }
-
-/* Button Base Styles */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-sm) var(--space-lg);
-  border-radius: var(--radius-md);
-  font-family: var(--font-primary);
-  font-weight: 500;
-  transition: all var(--transition-fast);
-  cursor: pointer;
-  border: none;
-}
-
-.btn-primary {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.btn-secondary {
-  background-color: var(--color-secondary);
-  color: white;
-}
-
-/* Form Elements */
-.input {
-  width: 100%;
-  padding: var(--space-sm);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-family: var(--font-body);
-  transition: border-color var(--transition-fast);
-}
-
-.input:focus {
-  outline: none;
-  border-color: var(--color-primary);
 }
 
 /* Card Base Style */
@@ -138,4 +79,52 @@
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   box-shadow: var(--shadow-md);
-} 
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: clamp(350px, 90%, 1200px);
+  }
+}
+
+/* Responsive Grid System */
+/* .grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-md);
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-lg);
+} */
+
+/* Responsive Column Spans */
+/* .col-1 { grid-column: span 1; }
+.col-2 { grid-column: span 2; }
+.col-3 { grid-column: span 3; }
+.col-4 { grid-column: span 4; }
+.col-6 { grid-column: span 6; }
+.col-12 { grid-column: span 12; } */
+
+/* Responsive Breakpoints */
+/* @media (max-width: 768px) {
+  .grid, .grid-auto {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .col-4, .col-6 {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid, .grid-auto {
+    grid-template-columns: 1fr;
+  }
+
+  .col-1, .col-2, .col-3, .col-4, .col-6, .col-12 {
+    grid-column: span 1;
+  }
+} */

@@ -1,5 +1,5 @@
-@import 'reset.css';
-@import 'design-system.css';
+@import "reset.css";
+@import "design-system.css";
 :root {
   font-family: var(--font-body);
   line-height: 1.5;
@@ -11,18 +11,37 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  .gingham-bg {
+    background-image: linear-gradient(
+        90deg,
+        rgba(214, 79, 41, 0.4) 50%,
+        transparent 0
+      ),
+      linear-gradient(0deg, rgba(214, 79, 41, 0.4) 50%, transparent 0);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    min-height: 100vh; /* Ensure the hero section takes full viewport height */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 }
 
 a {
   font-weight: 500;
-  color: var(--color-primary);
-  text-decoration: inherit;
+  color: var(--color-accent);
+  text-decoration: none;
 }
 
 a:hover {
-  color: var(--color-accent);
+  text-decoration: underline;
 }
 
+p {
+  line-height: 1.5;
+  margin-bottom: var(--space-xs);
+}
 
 h1 {
   font-family: var(--font-primary);
@@ -31,7 +50,7 @@ h1 {
   color: var(--color-accent);
 }
 
-h2{
+h2 {
   font-family: var(--font-primary);
   font-size: var(--text-2xl);
   line-height: 1.5;
@@ -39,7 +58,7 @@ h2{
   margin-bottom: var(--space-md);
 }
 
-h3{
+h3 {
   font-family: var(--font-primary);
   font-size: var(--text-xl);
   line-height: 1.5;
@@ -54,15 +73,15 @@ button {
   font-size: var(--text-base);
   font-weight: 500;
   font-family: var(--font-primary);
-  background-color: var(--color-accent);
   color: white;
   cursor: pointer;
   transition: border-color var(--transition-normal);
+  border: 1px solid #3d405b;
+  background-color: var(--color-info);
 }
 
-
 button:hover {
-  border-color: var(--color-primary);
+  box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.1);
 }
 
 button:focus,
@@ -86,7 +105,6 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* padding: var(--space-md) var(--space-lg); */
   background-color: var(--color-secondary);
   box-shadow: var(--shadow-sm);
   position: sticky;
@@ -98,13 +116,5 @@ header {
   :root {
     color: var(--color-text);
     background-color: var(--color-background);
-  }
-  
-  a:hover {
-    color: var(--color-accent);
-  }
-  
-  button {
-    background-color: var(--color-accent);
   }
 }
