@@ -72,7 +72,7 @@ const MenuDiv = styled.div`
     transition: all var(--transition-slow) ease-in-out;
     overflow: hidden;
     white-space: nowrap;
-    background-color: var(--color-secondary);
+    background-color: var(--color-primary);
     top: 0;
     padding-top: var(--space-3xl);
     left: 0;
