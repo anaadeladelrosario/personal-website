@@ -1,9 +1,0 @@
-.book-container {
-  padding: var(--space-xs);
-  border-radius: var(--radius-md);
-  border-style: groove;
-  border-color: rgba(255, 255, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.05);
-  -webkit-backdrop-filter: blur(1.5px);
-  backdrop-filter: blur(1.5px);
-}
