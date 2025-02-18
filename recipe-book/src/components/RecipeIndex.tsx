@@ -41,28 +41,27 @@ export const RecipeIndex: FC = () => {
   return (
     <div className="recipe-index">
       <h2>Index</h2>
-      <div>
-        {organizedRecipes.map((category, categoryIndex) => (
-          <div key={categoryIndex}>
-            <h3 className="category-title">{category.category}</h3>
-            <div>
-              {category.recipes.map((recipe, recipeIndex) => (
-                <div key={recipeIndex} className="recipe-item">
-                  <Link to={`/Recipe/${recipe.id}`}>{recipe.title}</Link>
-                  <span className="recipe-dots"></span>
-                  <span>{1}</span>
-                </div>
-              ))}
-            </div>
+      {organizedRecipes.map((category, categoryIndex) => (
+        <div className="category" key={categoryIndex}>
+          <h3 className="category-title">{category.category}</h3>
+          <div>
+            {category.recipes.map((recipe, recipeIndex) => (
+              <div key={recipeIndex} className="recipe-item">
+                <Link to={`/Recipe/${recipe.id}`}>{recipe.title}</Link>
+                <span className="recipe-dots"></span>
+                <span>{1}</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
       <div className="pagination">
         <Button
           label="Previous"
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
           size="x-small"
+          primary={true}
         />
         <div className="page-numbers">
           <span className="active">{currentPage}</span>
