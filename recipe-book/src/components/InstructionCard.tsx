@@ -1,5 +1,6 @@
 import React from "react";
 import { InstructionsProps } from "../components/interfaces/Recipe";
+import styled from "styled-components";
 
 const Instruction: React.FC<InstructionsProps> = ({
   step,
@@ -15,8 +16,12 @@ const Instruction: React.FC<InstructionsProps> = ({
           style={{ width: "10%", fontWeight: "bold" }}
         />
       )}
-      <div style={{ width: "10%", fontWeight: "bold" }}>{step}.</div>
-      <div style={{ width: "90%", textAlign: "left" }}>{description}</div>
+      <div style={{ width: "10%" }}>
+        <p style={{ fontWeight: "bold" }}>{step}.</p>
+      </div>
+      <div style={{ width: "90%", textAlign: "left" }}>
+        <p>{description}</p>
+      </div>
     </div>
   );
 };
@@ -25,15 +30,7 @@ const InstructionCard: React.FC<{ instructions: InstructionsProps[] }> = ({
   instructions,
 }) => {
   return (
-    <div
-      style={{
-        flex: "1 1 300px",
-        backgroundColor: "white",
-        borderRadius: "var(--radius-lg)",
-        padding: "var(--space-xl)",
-        maxWidth: "800px",
-      }}
-    >
+    <InstructionWrapper>
       <h2>Directions</h2>
       {instructions.map((instruction) => (
         <Instruction
@@ -43,8 +40,27 @@ const InstructionCard: React.FC<{ instructions: InstructionsProps[] }> = ({
           image={instruction.image}
         />
       ))}
-    </div>
+    </InstructionWrapper>
   );
 };
 
 export default InstructionCard;
+
+const InstructionWrapper = styled.div`
+  flex: 1 1 300px;
+  border-right: 3px solid #d0d0d0;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  padding: var(--space-3xl);
+  box-shadow: inset 0px 0px 100px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(
+    to left,
+    var(--color-background) 94%,
+    #cccccc 100%
+  );
+  z-index: var(--z-dropdown);
+  min-height: 50vh;
+  text-align: center;
+  @media (max-width: 635px) {
+    border-radius: var(--radius-lg);
+  }
+`;

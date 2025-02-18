@@ -64,14 +64,15 @@ export const Recipe: React.FC = () => {
       children={
         <ButtonSection>
           <Button
+            label="Delete"
             size="small"
-            label="Remove"
             onClick={() => id && handleDelete(id)}
+            secondary={true}
           />
           <Button
-            size="small"
-            primary
             label="Edit"
+            size="small"
+            primary={true}
             onClick={() => id && handleEdit(id)}
           />
         </ButtonSection>
@@ -79,6 +80,7 @@ export const Recipe: React.FC = () => {
       cardChildren={
         <RecipeDiv>
           <IngredientsList ingredients={recipeId.ingredients.$values} />
+          <Wire className="wire" />
           <InstructionCard instructions={recipeId.instructions.$values} />
         </RecipeDiv>
       }
@@ -91,10 +93,16 @@ export const Recipe: React.FC = () => {
 export default Recipe;
 
 const RecipeDiv = styled.div`
+  position: relative;
+  justify-content: space-between;
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 1px;
+  @media (max-width: 610px) {
+    gap: var(--space-xs);
+  }
 `;
 
 const ButtonSection = styled.div`
@@ -102,4 +110,18 @@ const ButtonSection = styled.div`
   position: absolute;
   top: 0;
   right: 0;
+`;
+
+const Wire = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 49.9%;
+  width: 0.18em; /* Adjust the thickness of the wire */
+  height: 96%; /* Make sure the wire connects both boxes */
+  background: #333; /* Wire color */
+  transform: translateY(-50%); /* Center the wire vertically */
+  background: radial-gradient(circle at 0% center, #333 60%, #cccccc 100%);
+  @media (max-width: 635px) {
+    display: none;
+  }
 `;
