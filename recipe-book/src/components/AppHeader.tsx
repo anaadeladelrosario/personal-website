@@ -4,22 +4,28 @@ import "../styles/design-system.css";
 import NavBar from "./NavBar";
 import { Button } from "./Button";
 
+export interface User {
+  name: string;
+  avatar: string;
+}
+
 interface AppHeaderProps {
-  username: string;
+  user: User;
   onLogout: () => void;
 }
 
-export const AppHeader: FC<AppHeaderProps> = ({ username, onLogout }) => {
+export const AppHeader: FC<AppHeaderProps> = ({ user, onLogout }) => {
   return (
     <header className="header">
       <div className="header-left">
         <NavBar />
       </div>
-
       <div className="header-center">
         <div className="search-container">
           <input
-            style={{ padding: "1%", marginBottom: "0" }}
+            style={{
+              marginBottom: "0",
+            }}
             type="text"
             className="search-input"
             placeholder="Search..."
@@ -30,10 +36,21 @@ export const AppHeader: FC<AppHeaderProps> = ({ username, onLogout }) => {
 
       <div className="header-right">
         <div className="user-info">
-          <span>Welcome, {username}!</span>
+          <span className="welcome">Welcome, {user.name}!</span>
+          <img
+            className="avatar"
+            style={{
+              width: "35px",
+              height: "35px",
+              padding: "var(--space-xs)",
+            }}
+            alt="logo"
+            src={user.avatar}
+          />
           <Button
+            style={{ padding: "var(--space-xs)" }}
             size="small"
-            secondary={true}
+            primary={true}
             label="Logout"
             onClick={onLogout}
           />

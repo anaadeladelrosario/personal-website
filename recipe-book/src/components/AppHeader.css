@@ -2,30 +2,59 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-md) var(--space-lg);
-  background-color: var(--color-primary);
+  padding: 10px var(--space-lg);
+  /* background-color: var(--color-primary); */
   box-shadow: var(--shadow-sm);
+  width: 100%;
   position: sticky;
-  top: 0;
-  z-index: var(--z-sticky);
+  /* top: 0;
+  z-index: var(--z-sticky); */
+  background: transparent;
+  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5),
+    0px 1px 3px rgba(0, 0, 0, 0.3);
+  background-image: -webkit-repeating-linear-gradient(
+      left,
+      hsla(30, 50%, 40%, 0) 0%,
+      /* Light wood tone */ hsla(30, 50%, 40%, 0) 6%,
+      hsla(30, 50%, 40%, 0.1) 7.5%
+    ),
+    -webkit-repeating-linear-gradient(left, hsla(30, 50%, 30%, 0) 0%, /* Darker wood grain */
+          hsla(30, 50%, 30%, 0) 4%, hsla(30, 50%, 30%, 0.03) 4.5%),
+    -webkit-repeating-linear-gradient(left, hsla(30, 50%, 50%, 0) 0%, /* Lighter wood highlights */
+          hsla(30, 50%, 50%, 0) 1.2%, hsla(30, 50%, 50%, 0.15) 2.2%),
+    linear-gradient(
+      180deg,
+      hsl(30, 40%, 45%) 0%,
+      /* Base wood tone */ hsl(30, 40%, 50%) 47%,
+      /* Lighter wood */ hsl(30, 40%, 45%) 53%,
+      hsl(30, 40%, 40%) 100% /* Darker wood */
+    );
+  /* border: 1px solid rgb(187, 143, 102); */
+  /* border-color: #111; */
+}
+
+/* Ensure each section has space */
+/* .header-left,
+.header-center,
+.header-right {
+  flex: 1;
+  text-align: center;
+} */
+.header-left {
+  bottom: 0;
 }
 
 .header-center {
   flex: 1;
-  /* margin: 0 var(--space-xl); */
 }
-
-/* .header-right {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-} */
 
 .search-container {
   position: relative;
-  /* width: clamp(350px, 50%, 1200px); */
-  margin: 0 auto;
-  padding: 0 var(--space-md);
+  margin: 0 var(--space-sm);
+  margin-left: var(--space-lg);
+  /*padding: 0 var(--space-md); */
+  display: flex;
+  align-items: center;
 }
 
 .search-input:focus {
@@ -45,85 +74,50 @@
 .user-info {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
+  justify-content: flex-end;
+}
+
+.avatar {
+  display: none;
 }
 
 /* Responsive adjustments */
-@media (min-width: 1024px) {
-  .header {
-    flex-wrap: wrap; /* Allow wrapping of children to next line */
-  }
-
-  .header-center {
-    position: relative;
-  }
-
-  .header-right {
-    position: relative;
-  }
-
-  .search-container {
-    width: 100%;
-  }
-}
-
-/* Additional adjustments for larger mobile devices (max-width: 992px) */
-@media (min-width: 767px) and (max-width: 1024px) {
-  .header {
-    padding: var(--space-md);
-  }
-  .header-left {
-    flex: 0 0 10%;
-  }
-  .header-center {
-    flex: 0 0 40%;
-  }
-  .user-info {
-    font-size: var(--text-md);
-  }
-}
 
 /* Tablet-sized devices (max-width: 768px) */
 @media (max-width: 768px) {
-  .header {
-    padding: var(--space-sm);
-  }
   .user-info {
     font-size: var(--text-sm);
   }
-}
 
-/* Smaller mobile devices (max-width: 576px) */
-@media (max-width: 576px) {
   .header {
-    flex-wrap: wrap-reverse;
+    flex-wrap: wrap; /* Allow items to wrap onto the next line */
+    justify-content: flex-start;
   }
 
-  .header-center {
-    width: 98vw;
-    /* max-width: none; */
-  }
-}
-
-/* Extra Small devices (max-width: 480px) */
-@media (max-width: 480px) {
-  .header {
-    flex-direction: column;
-  }
-
-  .header-center {
-    margin: var(--space-xs) 0;
-  }
-
+  /* .header-left,
   .header-right {
-    margin-top: var(--space-xs);
-    z-index: var(--z-modal);
-    position: absolute;
-    top: 10%;
-    right: 3%;
+    flex: 1 48%;
+    text-align: left;
+  } */
+
+  /* .header-center {
+    flex: 0 100%;
+    text-align: center;
+
+    order: 1;
+  } */
+
+  .search-container {
+    /* margin: 0; */
+    /* margin-left: var(--space-lg); */
+    padding: var(--space-sm);
+  }
+  .welcome {
+    display: none;
   }
 
-  .user-info {
-    font-size: var(--text-xxs);
+  .avatar {
+    display: block;
   }
 }
