@@ -70,15 +70,14 @@ const StyledButton = styled.button<ButtonProps>`
       : props.size === "large"
       ? "var(--text-lg)"
       : "var(--text-base)"};
-  background-color: ${(props) =>
+  background-image: ${(props) =>
     props.primary
-      ? "var(--color-primary)"
+      ? "var(--gold-tone-background)"
       : props.secondary
-      ? "var(--color-secondary)"
+      ? "var(--silver-tone-background)"
       : ""};
-  margin: var(--space-xs);
-  cursor: pointer;
-  color: var(--color-text);
+  border-color: ${(props) =>
+    props.primary ? "#ba6" : props.secondary ? "#7c7c7c" : ""};
   &:hover {
     filter: brightness(1.15);
   }
