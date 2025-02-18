@@ -14,11 +14,14 @@
   bottom: 0;
   left: 0;
   padding: var(--space-sm);
-  background: rgb(0, 0, 0); /* Fallback color */
-  background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
-  color: white;
+  background: rgba(0, 0, 0, 0.5); /*Black background with 0.5 opacity */
+  border-color: rgba(255, 255, 255, 0.1);
+  border-style: solid;
+  -webkit-backdrop-filter: blur(1.5px);
+  backdrop-filter: blur(2.5px);
   width: 100%;
   padding: var(--space-sm);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .book-title {
@@ -48,7 +51,7 @@
 }
 
 /* Adjust background size on smaller screens */
-@media (max-width: 768px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .gingham-bg {
     background-size: 20px 20px; /* Smaller pattern on mobile devices */
   }
@@ -62,13 +65,13 @@
   }
 }
 
-@media (min-width: 481px) and (max-width: 768px) {
+@media (min-width: 481px) and (max-width: 767px) {
   .book-section {
     margin-bottom: var(--space-xs);
   }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 320px) and (max-width: 480px) {
   .gingham-bg {
     background-size: 15px 15px; /* Further smaller pattern for extra small screens */
   }
