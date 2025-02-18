@@ -53,14 +53,22 @@
      This ensures all labels line up regardless of icon presence */
 .menu-item-label {
   grid-column: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 6.35rem; /* 100px - 24px (icon width) - 0.5rem (padding) = 76px */
+  min-height: 0;
 }
 
+.menu-item-label:hover {
+  overflow: visible;
+}
 .menu-item:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
 .menu-item:hover .menu-item-icon {
-  fill: #e57373;
+  fill: #ba6;
 }
 
 .menu-item-arrow {
@@ -105,7 +113,7 @@
   }
   .submenu.open {
     position: absolute; /* Take the child div out of the flow */
-    background-color: var(--color-primary);
+    background: var(--wood-tone-background);
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     max-height: 1000px;
