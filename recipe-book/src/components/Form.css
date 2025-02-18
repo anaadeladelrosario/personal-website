@@ -18,24 +18,43 @@
 /* Section Styling */
 .form-section {
   margin-bottom: var(--space-xs);
-  border-style: dashed;
-  border-width: 2px;
+  /* border-style: dashed; */
+  /* border-width: 2px; */
   display: flex;
   flex-direction: column;
+  text-align: center;
+  border: 1px solid #e9e0e0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-section h3 {
+/* section h3 {
   color: var(--color-text);
   margin-bottom: var(--space-sm);
   font-size: var(--text-xl);
   text-align: left;
-}
+} */
 
-section button {
+/* section button {
   margin-bottom: var(--space-xs);
   position: relative;
+} */
+
+.tooltip {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  top: -30px;
+  white-space: nowrap;
 }
 
+.remove-image-button:hover .tooltip {
+  display: block;
+}
 /* Form Groups */
 .form-group {
   margin-bottom: var(--spacing-xs);

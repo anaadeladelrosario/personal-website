@@ -447,28 +447,42 @@ export function Form() {
                     marginBottom: "var(--space-sm)",
                   }}
                 >
-                  <img
-                    style={{
-                      width: "20%",
-                      fontWeight: "bold",
-                    }}
-                    src={small}
-                    alt={`Step ${instruction.step} Image`}
-                  />
-                  <Button
-                    style={{ borderRadius: "var(--radius-lg)" }}
-                    size="x-small"
-                    label="+"
-                    type="button"
-                    disabled={true}
-                  />
-                  <Button
-                    style={{ borderRadius: "var(--radius-lg)" }}
-                    size="x-small"
-                    label="-"
-                    type="button"
-                    disabled={true}
-                  />
+                  {instruction.image ? (
+                    <>
+                      <img
+                        style={{
+                          width: "20%",
+                          fontWeight: "bold",
+                        }}
+                        src={small}
+                        alt={`Step ${instruction.step} Image`}
+                      />
+                      <Button
+                        className="remove-image-button"
+                        style={{
+                          borderRadius: "var(--radius-lg)",
+                          position: "relative",
+                        }}
+                        size="x-small"
+                        label="-"
+                        type="button"
+                        disabled={true}
+                      >
+                        <span className="tooltip">Remove image</span>
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      "Add an image"
+                      <Button
+                        style={{ borderRadius: "var(--radius-lg)" }}
+                        size="x-small"
+                        label="+"
+                        type="button"
+                        disabled={true}
+                      />
+                    </>
+                  )}
                 </div>
 
                 <textarea
@@ -497,18 +511,15 @@ export function Form() {
             <Button
               primary={false}
               disabled={true}
-              style={{ backgroundColor: "var(--color-warning)" }}
               type="button"
               label="Save as Draft"
             />
             <Button
               primary={true}
               type="submit"
-              label="Publish Recipe"
+              label={isLoading ? "Adding..." : "Add Recipe"}
               disabled={isLoading}
-            >
-              {isLoading ? "Adding..." : "Add Recipe"}
-            </Button>
+            />
           </div>
         </form>
       </div>
