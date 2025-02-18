@@ -88,10 +88,10 @@ button:disabled {
 }
 
 section {
-  background-color: var(--color-warning);
+  background-color: var(--color-background);
   margin: var(--space-md);
   padding: var(--space-md);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
 }
 
 header {
