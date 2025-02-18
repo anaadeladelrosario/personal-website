@@ -2,11 +2,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: var(--space-md);
+  padding: var(--space-md) 0;
 }
 
 .burger-button {
-  position: fixed;
   top: var(--space-md);
   left: var(--space-md);
   display: flex;
@@ -16,10 +15,9 @@
   height: 2rem;
   background: transparent;
   border: none;
-  cursor: pointer;
+  box-shadow: none;
   padding: 0;
   z-index: var(--z-toast);
-  transition: transform 0.2s ease-in-out;
 }
 
 .burger-button:focus {
@@ -94,11 +92,5 @@
 @media (min-width: 1024px) {
   .burger-menu {
     display: none;
-  }
-}
-
-@media (min-width: 768px) {
-  .burger-menu {
-    padding: 5px;
   }
 }

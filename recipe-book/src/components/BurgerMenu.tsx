@@ -5,16 +5,16 @@ export interface BurgerMenuProps {
   onMenuToggle?: (isOpen: boolean) => void;
   onClick?: () => void;
   style?: React.CSSProperties;
-  isOpen?: boolean;
+  open?: boolean;
 }
 
 export const BurgerMenu: React.FC<BurgerMenuProps> = ({
   onClick,
   style,
-  isOpen,
+  open,
 }) => {
   return (
-    <div className={isOpen ? "burger-menu open" : "burger-menu"} style={style}>
+    <div className={open ? "burger-menu open" : "burger-menu"} style={style}>
       <button
         title="burger-button"
         type="button"

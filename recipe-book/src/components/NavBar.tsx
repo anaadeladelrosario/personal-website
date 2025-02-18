@@ -4,6 +4,8 @@ import { Add01Icon } from "hugeicons-react";
 import { Home01Icon, Settings01Icon, ShoppingBag01Icon } from "hugeicons-react";
 import { MenuItemProps } from "./MenuItem";
 import styled from "styled-components";
+import { BurgerMenu } from "./BurgerMenu";
+import { useEffect, useRef, useState } from "react";
 
 const menuItems: MenuItemProps[] = [
   { label: "Home", icon: Home01Icon },
@@ -21,9 +23,34 @@ const menuItems: MenuItemProps[] = [
 ];
 
 const NavBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const toggleMenu = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+
+  // Close menu when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (window.innerWidth <= 1024 && isOpen && menuRef.current) {
+        const isClickOutsideMenu =
+          menuRef.current && !menuRef.current.contains(event.target as Node);
+        if (isClickOutsideMenu) {
+          toggleMenu();
+        }
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <NavbarContainer>
-      <Menu items={menuItems} />
+    <NavbarContainer className="navbar-container" ref={menuRef}>
+      <BurgerMenu open={isOpen} onClick={toggleMenu} />
+      <Menu items={menuItems} open={isOpen} />
     </NavbarContainer>
   );
 };
@@ -31,14 +58,14 @@ const NavBar = () => {
 export default NavBar;
 
 const NavbarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: flex-start;
 
-  padding-top: var(--space-sm);
+  // padding-top: var(--space-sm);
 
-  @media (min-width: 1024px) {
-    flex-direction: row;
-    align-items: center;
-  }
+  // @media (min-width: 1024px) {
+  //   flex-direction: row;
+  //   align-items: center;
+  // }
 `;
