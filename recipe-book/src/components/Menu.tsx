@@ -3,6 +3,8 @@ import "./Menu.css";
 import "../styles/design-system.css";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
+import { useState } from "react";
+import { Button } from "./Button";
 
 export interface MenuProps {
   items?: MenuItemProps[];
@@ -11,6 +13,8 @@ export interface MenuProps {
 }
 
 export const Menu = ({ items, style, open }: MenuProps) => {
+  const [isLogout, setIsLogout] = useState<boolean>(true);
+
   return (
     <MenuDiv className={`menu-content${open ? "-open" : ""}`} style={style}>
       <ul className="menu-list">
@@ -24,6 +28,13 @@ export const Menu = ({ items, style, open }: MenuProps) => {
           <></>
         )}
       </ul>
+      <Button
+        className="login-button"
+        size="small"
+        primary={true}
+        label={isLogout ? "Logout" : "Login"}
+        onClick={() => setIsLogout(!isLogout)}
+      />
     </MenuDiv>
   );
 };
@@ -33,10 +44,10 @@ export default Menu;
 const MenuDiv = styled.div`
   display: ${(props) =>
     props.className == "menu-content-open" ? "block" : "none"};
-  flex-direction: column;
 
   @media (min-width: 1024px) {
-    display: block; // Always show on desktop
+    display: flex; // Always show on desktop
+    flex-direction: row;
   }
   @media (max-width: 1024px) {
     position: absolute;

@@ -20,12 +20,12 @@
 }
 
 .menu-item.active .menu-item-icon {
-  fill: var(--color-secondary);
-}
-
-.menu-item:hover .menu-item-icon {
   fill: var(--color-primary);
 }
+
+/* .menu-item:hover .menu-item-icon {
+  fill: var(--color-primary);
+} */
 
 /* Icon sizing for consistency */
 /* .menu-item-icon {
