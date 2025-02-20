@@ -106,10 +106,8 @@ const RecipeDiv = styled.div`
 `;
 
 const ButtonSection = styled.div`
-  margin: var(--space-lg) var(--space-lg);
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: relative;
+  float: right;
 `;
 
 const Wire = styled.div`
