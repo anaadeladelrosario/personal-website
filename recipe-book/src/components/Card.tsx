@@ -1,4 +1,3 @@
-import "./Card.css";
 import "../styles/design-system.css";
 import styled from "styled-components";
 

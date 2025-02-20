@@ -2,8 +2,8 @@
 :root {
   /* Colors */
   --color-background: #fdfbf7;
-  --color-primary: #81b29a;
-  --color-secondary: #e07a5f;
+  --color-primary: #e07a5f;
+  --color-secondary: #81b29a;
   --color-accent: #3d405b;
 
   /* Functional Colors */
@@ -153,12 +153,12 @@
 }
 
 /* Card Base Style */
-.card {
+/* .card {
   background: white;
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   box-shadow: var(--shadow-md);
-}
+} */
 
 .footer {
   position: relative;
@@ -175,6 +175,16 @@
   -webkit-backdrop-filter: blur(1.5px);
   backdrop-filter: blur(2.5px);
   background: transparent;
+}
+
+.logo {
+  width: 3rem;
+  height: auto;
+  border: 0.1px solid transparent;
+  border-radius: var(--radius-full);
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
+  margin-right: var(--space-sm);
+  z-index: var(--z-toast);
 }
 
 /* Gingham pattern background */
