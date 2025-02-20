@@ -1,11 +1,16 @@
 import Menu from "./Menu";
 import "../styles/design-system.css";
 import { Add01Icon } from "hugeicons-react";
-import { Home01Icon, Settings01Icon, ShoppingBag01Icon } from "hugeicons-react";
+import {
+  Home01Icon,
+  Settings01Icon,
+  ShoppingBag01Icon,
+  UserAccountIcon,
+} from "hugeicons-react";
 import { MenuItemProps } from "./MenuItem";
-import styled from "styled-components";
 import { BurgerMenu } from "./BurgerMenu";
 import { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 
 const menuItems: MenuItemProps[] = [
   { label: "Home", icon: Home01Icon },
@@ -19,6 +24,7 @@ const menuItems: MenuItemProps[] = [
     ],
   },
   { label: "Add Recipe", icon: Add01Icon },
+  { label: "Profile", icon: UserAccountIcon },
   { label: "Settings", icon: Settings01Icon },
 ];
 
@@ -64,8 +70,9 @@ const NavbarContainer = styled.div`
 
   // padding-top: var(--space-sm);
 
-  // @media (min-width: 1024px) {
-  //   flex-direction: row;
-  //   align-items: center;
-  // }
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;

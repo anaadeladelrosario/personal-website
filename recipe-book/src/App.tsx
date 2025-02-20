@@ -1,16 +1,10 @@
-import { AppHeader, User } from "./components/AppHeader";
+import { AppHeader } from "./components/AppHeader";
 import Hero from "./components/Hero";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Form from "./components/Form";
 import Recipe from "./components/Recipe";
 import test from "./assets/test.jpg";
 import { RecipeIndex } from "./components/RecipeIndex";
-import userIcon from "./assets/user.svg";
-
-const user: User = {
-  name: "Ana",
-  avatar: userIcon,
-};
 
 function App() {
   return (
@@ -24,15 +18,15 @@ function App() {
         }}
         className="landing-page"
       >
-        <AppHeader user={user} onLogout={() => {}} />
+        <AppHeader />
         <Routes>
           <Route
             path="/"
             element={
               <Hero
                 title="Your Recipe Book"
+                subtitle="Click on a recipe to view its details"
                 image={test}
-                cardTitle="Click on a recipe to view more details"
                 cardChildren={<RecipeIndex />}
               />
             }
