@@ -3,6 +3,7 @@ import "./AppHeader.css";
 import "../styles/design-system.css";
 import NavBar from "./NavBar";
 import { Search01Icon } from "hugeicons-react";
+import logo from "../assets/logo.png";
 
 export const AppHeader: FC = () => {
   const [isBarSearchOpen, setIsBarSearchOpen] = useState(false);
@@ -32,7 +33,7 @@ export const AppHeader: FC = () => {
 
       <div className="header-right">
         <div className="user-info">
-          <img src="logo.png" alt="Recipe Book" className="logo" />
+          <img src={logo} alt="Recipe Book" className="logo" />
         </div>
       </div>
     </header>
