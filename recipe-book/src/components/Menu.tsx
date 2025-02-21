@@ -31,7 +31,7 @@ export const Menu = ({ items, style, open }: MenuProps) => {
       <Button
         className="login-button"
         size="small"
-        primary={true}
+        primary
         label={isLogout ? "Logout" : "Login"}
         onClick={() => setIsLogout(!isLogout)}
       />

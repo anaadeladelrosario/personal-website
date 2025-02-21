@@ -15,8 +15,8 @@ export interface ButtonProps {
 }
 
 export const Button = ({
-  primary = false,
-  secondary = false,
+  primary,
+  secondary,
   size = "medium",
   type = "button",
   disabled,

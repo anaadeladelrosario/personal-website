@@ -61,7 +61,7 @@ export const RecipeIndex: FC = () => {
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
           size="x-small"
-          primary={true}
+          primary
         />
         <div className="page-numbers">
           <span className="active">{currentPage}</span>
@@ -71,7 +71,7 @@ export const RecipeIndex: FC = () => {
         </div>
         <Button
           label="Next"
-          primary={true}
+          primary
           onClick={() => paginate(currentPage + 1)}
           disabled={currentPage === totalPages}
           size="x-small"

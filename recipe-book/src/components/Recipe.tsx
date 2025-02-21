@@ -72,7 +72,7 @@ export const Recipe: React.FC = () => {
           <Button
             label="Edit"
             size="small"
-            primary={true}
+            primary
             onClick={() => id && handleEdit(id)}
           />
         </ButtonSection>
