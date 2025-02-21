@@ -60,11 +60,10 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     const isSubMenuOpen = openSubMenus.includes(label);
     const paddingLeft = `${depth * 0.5}rem`;
     return (
-      <div className="menu-item-container" ref={menuRef}>
+      <div key={uuidv4()} className="menu-item-container" ref={menuRef}>
         {subItems.length > 0 ? (
           <>
             <div
-              key={uuidv4()}
               className={`menu-item ${activeItem === label ? "active" : ""}`}
               onClick={() => {
                 toggleSubMenu(label, setOpenSubMenus);
