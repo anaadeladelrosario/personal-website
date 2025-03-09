@@ -117,11 +117,10 @@ export const MenuItem: React.FC<MenuItemProps> = ({
               ? "/"
               : `/${convertStringToLink(label)}`
           }
+          className={`menu-item ${activeItem === label ? "active" : ""}`}
         >
-          <div className={`menu-item ${activeItem === label ? "active" : ""}`}>
-            {IconComponent && <IconComponent className="menu-item-icon" />}
-            <span className="menu-item-label">{label}</span>
-          </div>
+          {IconComponent && <IconComponent className="menu-item-icon" />}
+          <span className="menu-item-label">{label}</span>
         </Link>
       )}
     </div>
