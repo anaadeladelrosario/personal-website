@@ -1,14 +1,16 @@
-import React from "react";
 import Ingredient, { IngredientProps } from "./Ingredient";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 
-const IngredientsList: React.FC<{ ingredients: IngredientProps[] }> = ({
+const IngredientsList = ({
   ingredients,
+}: {
+  ingredients: IngredientProps[];
 }) => {
   return (
     <IngredientListWrapper>
       <h2>Ingredients</h2>
+      ingredients ? (
       {ingredients.map((ingredient) => (
         <Ingredient
           key={uuidv4()}
@@ -18,6 +20,7 @@ const IngredientsList: React.FC<{ ingredients: IngredientProps[] }> = ({
           optional={ingredient.optional}
         />
       ))}
+      ) : (<></>)
     </IngredientListWrapper>
   );
 };

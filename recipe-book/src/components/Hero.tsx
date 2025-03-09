@@ -3,7 +3,7 @@ import "./Hero.css";
 import "../styles/design-system.css";
 import { useState } from "react";
 
-function Hero({
+const Hero = ({
   title,
   subtitle,
   image,
@@ -17,7 +17,7 @@ function Hero({
   children?: React.ReactNode;
   cardTitle?: string;
   cardChildren?: React.ReactNode;
-}) {
+}) => {
   const [showMore, setShowMore] = useState(false);
 
   const toggleReadMore = () => {
@@ -53,6 +53,6 @@ function Hero({
       )}
     </div>
   );
-}
+};
 
 export default Hero;

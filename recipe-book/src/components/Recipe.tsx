@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Hero from "./Hero";
 import test from "../assets/test.jpg";
 
-export const Recipe: React.FC = () => {
+export const Recipe = () => {
   const { id } = useParams<{ id: string }>(); // Extract the `id` from the URL
   const [recipeId, setRecipeItemId] = useState<RecipeProps | null>(null);
   const navigate = useNavigate(); // Initialize the navigation function
@@ -86,7 +86,7 @@ export const Recipe: React.FC = () => {
       }
     />
   ) : (
-    <>{Error}</>
+    <>{<p>Error</p>}</>
   );
 };
 

@@ -1,12 +1,7 @@
-import React from "react";
 import { InstructionsProps } from "../components/interfaces/Recipe";
 import styled from "styled-components";
 
-const Instruction: React.FC<InstructionsProps> = ({
-  step,
-  description,
-  image,
-}) => {
+const Instruction = ({ step, description, image }: InstructionsProps) => {
   return (
     <div style={{ display: "flex", marginBottom: "10px" }}>
       {image && (
@@ -26,12 +21,15 @@ const Instruction: React.FC<InstructionsProps> = ({
   );
 };
 
-const InstructionCard: React.FC<{ instructions: InstructionsProps[] }> = ({
+const InstructionCard = ({
   instructions,
+}: {
+  instructions: InstructionsProps[];
 }) => {
   return (
     <InstructionWrapper>
       <h2>Directions</h2>
+      instructions ?(
       {instructions.map((instruction) => (
         <Instruction
           key={instruction.id}
@@ -40,6 +38,7 @@ const InstructionCard: React.FC<{ instructions: InstructionsProps[] }> = ({
           image={instruction.image}
         />
       ))}
+      ): <></>
     </InstructionWrapper>
   );
 };

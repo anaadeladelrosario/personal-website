@@ -1,9 +1,12 @@
 import "../styles/design-system.css";
 import styled from "styled-components";
 
-export const Card: React.FC<{ title?: string; children: React.ReactNode }> = ({
+export const Card = ({
   title,
   children,
+}: {
+  title?: string;
+  children: React.ReactNode;
 }) => {
   return (
     <BookContainer className="container">
