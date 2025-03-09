@@ -34,9 +34,9 @@ export const Button = ({
     : "btn-default";
   return (
     <StyledButton
-      primary={primary}
-      secondary={secondary}
-      size={size}
+      $primary={primary}
+      $secondary={secondary}
+      $size={size}
       type={type}
       className={["button", `button--${size}`, mode, `${className}`]
         .filter(Boolean)
@@ -52,32 +52,36 @@ export const Button = ({
   );
 };
 
-const StyledButton = styled.button<ButtonProps>`
+const StyledButton = styled.button<{
+  $size: ButtonProps["size"];
+  $primary: ButtonProps["primary"];
+  $secondary: ButtonProps["secondary"];
+}>`
   transition: filter 0.3s ease;
   width: ${(props) =>
-    props.size === "x-small"
+    props.$size === "x-small"
       ? "fit-content"
-      : props.size === "small"
+      : props.$size === "small"
       ? "fit-content"
-      : props.size === "large"
+      : props.$size === "large"
       ? "100%"
       : "fit-content"};
   font-size: ${(props) =>
-    props.size === "x-small"
+    props.$size === "x-small"
       ? "var(--text-xs)"
-      : props.size === "small"
+      : props.$size === "small"
       ? "var(--text-sm)"
-      : props.size === "large"
+      : props.$size === "large"
       ? "var(--text-lg)"
       : "var(--text-base)"};
   background-image: ${(props) =>
-    props.primary
+    props.$primary === true
       ? "var(--gold-tone-background)"
-      : props.secondary
+      : props.$secondary === true
       ? "var(--silver-tone-background)"
       : ""};
   border-color: ${(props) =>
-    props.primary ? "#ba6" : props.secondary ? "#7c7c7c" : ""};
+    props.$primary ? "#ba6" : props.$secondary ? "#7c7c7c" : ""};
   &:hover {
     filter: brightness(1.15);
   }
