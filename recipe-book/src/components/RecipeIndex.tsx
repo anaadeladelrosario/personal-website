@@ -12,6 +12,7 @@ export const RecipeIndex: FC = () => {
   const [recipes, setRecipes] = useState<RecipeProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [loading, setIsLoading] = useState(true);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(recipes.length / itemsPerPage);
@@ -35,26 +36,33 @@ export const RecipeIndex: FC = () => {
       })
       .catch((error) => {
         console.error("Error fetching recipes:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
   return (
     <div className="recipe-index">
       <h2>Index</h2>
-      {organizedRecipes.map((category, categoryIndex) => (
-        <div className="category" key={categoryIndex}>
-          <h3 className="category-title">{category.category}</h3>
-          <div>
-            {category.recipes.map((recipe, recipeIndex) => (
-              <div key={recipeIndex} className="recipe-item">
-                <Link to={`/Recipe/${recipe.id}`}>{recipe.title}</Link>
-                <span className="recipe-dots"></span>
-                <span>{1}</span>
-              </div>
-            ))}
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        organizedRecipes.map((category, categoryIndex) => (
+          <div className="category" key={categoryIndex}>
+            <h3 className="category-title">{category.category}</h3>
+            <div>
+              {category.recipes.map((recipe, recipeIndex) => (
+                <div key={recipeIndex} className="recipe-item">
+                  <Link to={`/Recipe/${recipe.id}`}>{recipe.title}</Link>
+                  <span className="recipe-dots"></span>
+                  <span>{1}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
       <div className="pagination">
         <Button
           label="Previous"
