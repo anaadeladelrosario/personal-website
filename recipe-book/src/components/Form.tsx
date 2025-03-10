@@ -18,8 +18,9 @@ import {
 } from "./enums/formEnums";
 import { FormData } from "./interfaces/Form";
 import small from "../assets/small.jpg";
+import ImagePreview from "./ImagePreview";
 
-export function Form() {
+export function Form({ mode }: { mode: "create" | "edit" }) {
   const [formData, setFormData] = useState<FormData>({
     title: "",
     description: "",
@@ -45,6 +46,9 @@ export function Form() {
     notes: "",
   });
 
+  // File state
+  const [file, setFile] = useState<File | null>(null);
+
   // State for tracking loading or errors
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -52,6 +56,15 @@ export function Form() {
   // Edit mode
   const { recipeId } = useParams(); // Get recipeId from the URL params
   const navigate = useNavigate(); // To navigate after submission
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = event.target.files;
+    if (fileList && fileList.length > 0) {
+      setFile(fileList[0]);
+    } else {
+      setFile(null);
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -122,61 +135,65 @@ export function Form() {
     }
   };
 
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
-
-    if (recipeId) {
-      handleUpdate();
-      navigate(`/Recipe/${recipeId}`);
-    } else {
-      try {
-        const response = await fetch("https://localhost:44369/api/Recipe", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData), // Send the recipe object as the request body
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to add the recipe");
-        }
-
-        const result = await response.json();
-        console.log("Recipe added:", result); // Log the response (new recipe with generated ID)
-        setFormData({
-          title: "",
-          ingredients: [],
-          instructions: [],
-          cuisine: Cuisine.Australian,
-          category: Categories.MainCourse,
-          difficulty: Difficulty.Easy,
-          costRange: CostRange.Budget,
-          notes: "",
-          tags: [],
-          isVegetarian: false,
-          description: "",
-          preparationTime: 0,
-          cookingTime: 0,
-          servings: 0,
-        }); // Reset form state after successful submit
-        navigate("/");
-      } catch (err) {
-        setError("An error occurred while adding the recipe.");
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
+  const handleSubmit = () => {
+    console.log(formData);
   };
+
+  // Handle form submission
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //   setError("");
+
+  //   if (recipeId) {
+  //     handleUpdate();
+  //     navigate(`/Recipe/${recipeId}`);
+  //   } else {
+  //     try {
+  //       const response = await fetch("https://localhost:44369/api/Recipe", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(formData), // Send the recipe object as the request body
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error("Failed to add the recipe");
+  //       }
+
+  //       const result = await response.json();
+  //       console.log("Recipe added:", result); // Log the response (new recipe with generated ID)
+  //       setFormData({
+  //         title: "",
+  //         ingredients: [],
+  //         instructions: [],
+  //         cuisine: Cuisine.Australian,
+  //         category: Categories.MainCourse,
+  //         difficulty: Difficulty.Easy,
+  //         costRange: CostRange.Budget,
+  //         notes: "",
+  //         tags: [],
+  //         isVegetarian: false,
+  //         description: "",
+  //         preparationTime: 0,
+  //         cookingTime: 0,
+  //         servings: 0,
+  //       }); // Reset form state after successful submit
+  //       navigate("/");
+  //     } catch (err) {
+  //       setError("An error occurred while adding the recipe.");
+  //       console.error(err);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  // };
 
   // Fetch recipe data when the component mounts
   useEffect(() => {
     const fetchRecipe = async () => {
-      if (recipeId) {
+      if (mode === "edit" && recipeId) {
         try {
           const response = await axios.get(
             `https://localhost:44369/api/Recipe/${recipeId}`
@@ -199,12 +216,32 @@ export function Form() {
           });
         } catch (error) {
           console.error("Error:", error);
+        } finally {
+          setIsLoading(false);
         }
       }
     };
 
     fetchRecipe();
-  }, [recipeId]);
+    return () => {
+      setFormData({
+        title: "",
+        ingredients: [],
+        instructions: [],
+        cuisine: Cuisine.Australian,
+        category: Categories.MainCourse,
+        difficulty: Difficulty.Easy,
+        costRange: CostRange.Budget,
+        notes: "",
+        tags: [],
+        isVegetarian: false,
+        description: "",
+        preparationTime: 0,
+        cookingTime: 0,
+        servings: 0,
+      });
+    };
+  }, [mode, recipeId]);
 
   return (
     <div className="gingham-bg">
@@ -473,13 +510,13 @@ export function Form() {
                     </>
                   ) : (
                     <>
-                      "Add an image"
-                      <Button
-                        style={{ borderRadius: "var(--radius-lg)" }}
-                        size="x-small"
-                        label="+"
-                        type="button"
-                        disabled={true}
+                      <ImagePreview file={file} />
+                      <input
+                        type="file"
+                        id="step-picture"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        style={{ marginBottom: "var(--space-xs)" }}
                       />
                     </>
                   )}
@@ -507,15 +544,10 @@ export function Form() {
             />
           </section>
           <div className="form-actions">
-            <Button secondary={true} type="reset" label="Cancel" />
+            <Button secondary type="reset" label="Cancel" />
+            <Button disabled={true} type="button" label="Save as Draft" />
             <Button
-              primary={false}
-              disabled={true}
-              type="button"
-              label="Save as Draft"
-            />
-            <Button
-              primary={true}
+              primary
               type="submit"
               label={isLoading ? "Adding..." : "Add Recipe"}
               disabled={isLoading}
