@@ -20,6 +20,7 @@ import { FormData } from "./interfaces/Form";
 import small from "../assets/small.jpg";
 // import ImagePreview from "./ImagePreview";
 import { useQuery } from "@tanstack/react-query";
+import { Spinner } from "./Spinner";
 
 export function Form({ mode }: { mode: "create" | "edit" }) {
   const [formData, setFormData] = useState<FormData>({
@@ -561,9 +562,11 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
             <Button
               primary
               type="submit"
-              label={isLoading ? "Adding..." : "Add Recipe"}
+              label={isLoading ? "" : "Add Recipe"}
               disabled={isLoading}
-            />
+            >
+              {isLoading && <Spinner loading={isLoading} />}
+            </Button>
           </div>
         </form>
       </div>
