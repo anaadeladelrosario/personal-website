@@ -11,12 +11,14 @@ import {
 
 export interface MenuItemProps {
   label: string;
+  id?: string;
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> | null;
   subItems?: MenuItemProps[];
 }
 
 export const MenuItem: React.FC<MenuItemProps> = ({
   label = "Text",
+  id,
   icon,
   subItems = [],
 }) => {
@@ -55,6 +57,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   const renderMenuItemWithSubItems = (
     label: string,
     subItems: MenuItemProps[],
+    id?: string,
     depth: number = 0
   ) => {
     const isSubMenuOpen = openSubMenus.includes(label);
@@ -84,6 +87,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
                 renderMenuItemWithSubItems(
                   subItem.label,
                   subItem.subItems || [],
+                  subItem?.id,
                   depth + 1
                 )
               )}
@@ -94,7 +98,9 @@ export const MenuItem: React.FC<MenuItemProps> = ({
             to={
               convertStringToLink(label) === "home"
                 ? "/"
-                : `/${convertStringToLink(label)}`
+                : convertStringToLink(label) === "add-recipe"
+                ? `/${convertStringToLink(label)}`
+                : `/Recipe/${id}`
             }
             className={`menu-item ${activeItem === label ? "active" : ""}`}
             style={{ paddingLeft }}
@@ -109,13 +115,15 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   return (
     <div key={uuidv4()}>
       {hasSubItems ? (
-        renderMenuItemWithSubItems(label, subItems, 0)
+        renderMenuItemWithSubItems(label, subItems, id, 0)
       ) : (
         <Link
           to={
             convertStringToLink(label) === "home"
               ? "/"
-              : `/${convertStringToLink(label)}`
+              : convertStringToLink(label) === "add-recipe"
+              ? `/${convertStringToLink(label)}`
+              : `/Recipe/${id}`
           }
           className={`menu-item ${activeItem === label ? "active" : ""}`}
         >

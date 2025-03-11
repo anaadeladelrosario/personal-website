@@ -11,26 +11,40 @@ import { MenuItemProps } from "./MenuItem";
 import { BurgerMenu } from "./BurgerMenu";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-
-const menuItems: MenuItemProps[] = [
-  { label: "Home", icon: Home01Icon },
-  {
-    label: "Recipes",
-    icon: ShoppingBag01Icon,
-    subItems: [
-      { label: "Aussie Pie" },
-      { label: "Cuban Flan" },
-      { label: "Swedish Meatballs" },
-    ],
-  },
-  { label: "Add Recipe", icon: Add01Icon },
-  { label: "Profile", icon: UserAccountIcon },
-  { label: "Settings", icon: Settings01Icon },
-];
+import axios from "axios";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await axios.get("https://localhost:44369/api/Recipe");
+        setRecipes(response.data.$values);
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
+
+  const menuItems: MenuItemProps[] = [
+    { label: "Home", icon: Home01Icon },
+    {
+      label: "Recipes",
+      icon: ShoppingBag01Icon,
+      subItems: recipes.map((recipe) => ({
+        label: recipe.title,
+        id: recipe.id,
+      })),
+    },
+    { label: "Add Recipe", icon: Add01Icon },
+    { label: "Profile", icon: UserAccountIcon },
+    { label: "Settings", icon: Settings01Icon },
+  ];
 
   const toggleMenu = () => {
     setIsOpen((prevState) => !prevState);
