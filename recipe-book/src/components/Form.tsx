@@ -266,7 +266,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
               <textarea
                 id="description"
                 name="description"
-                value={formData.description}
+                value={formData.description || ""}
                 onChange={handleChange}
                 placeholder="Brief description of your recipe"
               />
@@ -276,7 +276,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
               <select
                 id="category"
                 name="category"
-                value={formData.category}
+                value={formData.category || ""}
                 onChange={handleChange}
                 required
               >
@@ -293,7 +293,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
               <select
                 id="cuisine"
                 name="cuisine"
-                value={formData.cuisine}
+                value={formData.cuisine || ""}
                 onChange={handleChange}
                 required
               >
@@ -310,7 +310,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
               <textarea
                 id="notes"
                 name="notes"
-                value={formData.notes}
+                value={formData.notes || ""}
                 onChange={handleChange}
                 placeholder="Any additional notes about the recipe..."
               />
@@ -360,7 +360,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
               <select
                 id="difficulty"
                 name="difficulty"
-                value={formData.difficulty}
+                value={formData.difficulty || ""}
                 onChange={handleChange}
                 required
               >
@@ -377,7 +377,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
               <select
                 id="costRange"
                 name="costRange"
-                value={formData.costRange}
+                value={formData.costRange || ""}
                 onChange={handleChange}
               >
                 <option value="">Select Cost Range</option>
@@ -435,7 +435,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
                 <select
                   id="unit"
                   name="unit"
-                  value={formData.ingredients[index].unit}
+                  value={formData.ingredients[index].unit || ""}
                   onChange={(e) =>
                     handleIngredientChange(index, "unit", e.target.value)
                   }
@@ -523,7 +523,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
                 </div>
 
                 <textarea
-                  value={instruction.description}
+                  value={instruction.description || ""}
                   onChange={(e) => {
                     const newInstructions = [...formData.instructions];
                     newInstructions[index].description = e.target.value;

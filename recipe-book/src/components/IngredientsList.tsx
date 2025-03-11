@@ -10,17 +10,19 @@ const IngredientsList = ({
   return (
     <IngredientListWrapper>
       <h2>Ingredients</h2>
-      ingredients ? (
-      {ingredients.map((ingredient) => (
-        <Ingredient
-          key={uuidv4()}
-          quantity={ingredient.quantity}
-          name={ingredient.name}
-          unit={ingredient.unit}
-          optional={ingredient.optional}
-        />
-      ))}
-      ) : (<></>)
+      {ingredients ? (
+        ingredients.map((ingredient) => (
+          <Ingredient
+            key={uuidv4()}
+            quantity={ingredient.quantity}
+            name={ingredient.name}
+            unit={ingredient.unit}
+            optional={ingredient.optional}
+          />
+        ))
+      ) : (
+        <></>
+      )}
     </IngredientListWrapper>
   );
 };

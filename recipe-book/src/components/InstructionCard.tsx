@@ -29,16 +29,18 @@ const InstructionCard = ({
   return (
     <InstructionWrapper>
       <h2>Directions</h2>
-      instructions ?(
-      {instructions.map((instruction) => (
-        <Instruction
-          key={instruction.id}
-          step={instruction.step}
-          description={instruction.description}
-          image={instruction.image}
-        />
-      ))}
-      ): <></>
+      {instructions ? (
+        instructions.map((instruction) => (
+          <Instruction
+            key={instruction.id}
+            step={instruction.step}
+            description={instruction.description}
+            image={instruction.image}
+          />
+        ))
+      ) : (
+        <></>
+      )}
     </InstructionWrapper>
   );
 };
