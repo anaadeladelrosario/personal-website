@@ -9,11 +9,13 @@ import { RecipeProps } from "./interfaces/Recipe";
 import { useNavigate } from "react-router-dom";
 import Hero from "./Hero";
 import test from "../assets/test.jpg";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const Recipe = () => {
   const { id } = useParams<{ id: string }>(); // Extract the `id` from the URL
   const [recipeId, setRecipeItemId] = useState<RecipeProps | null>(null);
   const navigate = useNavigate(); // Initialize the navigation function
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     axios
@@ -26,28 +28,22 @@ export const Recipe = () => {
       });
   }, [id]);
 
-  const deleteProduct = async (id: number | string) => {
-    try {
-      const response = await axios.delete<RecipeProps>(
-        `https://localhost:44369/api/Recipe/${id}`
-      );
-
-      if (response.status === 200) {
-        console.log(`OK`);
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  const deleteRecipeMutation = useMutation({
+    mutationFn: (id: number | string) =>
+      axios
+        .delete<RecipeProps>(`https://localhost:44369/api/Recipe/${id}`)
+        .catch((error) => {
+          console.error("Error deleting recipe:", error);
+          throw error;
+        }),
+    onSuccess: () => {
+      navigate("/");
+      queryClient.invalidateQueries({ queryKey: ["recipesKey"] });
+    },
+  });
 
   const handleDelete = (id: number | string) => {
-    if (id) {
-      deleteProduct(id);
-      console.log(`Recipe ${id} deleted`);
-    } else {
-      console.log("Please provide a valid product ID");
-    }
+    deleteRecipeMutation.mutate(id);
   };
 
   const handleEdit = (id: number | string) => {

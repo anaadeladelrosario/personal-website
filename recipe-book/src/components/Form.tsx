@@ -19,7 +19,7 @@ import {
 import { FormData } from "./interfaces/Form";
 import small from "../assets/small.jpg";
 // import ImagePreview from "./ImagePreview";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "./Spinner";
 
 export function Form({ mode }: { mode: "create" | "edit" }) {
@@ -58,6 +58,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
   // Edit mode
   const { recipeId } = useParams(); // Get recipeId from the URL params
   const navigate = useNavigate(); // To navigate after submission
+  const queryClient = useQueryClient();
 
   // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   const fileList = event.target.files;
@@ -128,7 +129,6 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
 
         if (response.status === 200) {
           console.log("Recipe updated successfully");
-          // Navigate to the success page
           navigate(`/Recipe/${recipeId}`);
         }
       } catch (error) {
@@ -137,9 +137,57 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
     }
   };
 
-  // const handleSubmit = () => {
-  //   console.log(formData);
-  // };
+  const addRecipeMutation = useMutation({
+    mutationFn: (formData: FormData) =>
+      axios
+        .post("https://localhost:44369/api/Recipe", formData)
+        .then(() => {
+          setFormData({
+            title: "",
+            ingredients: [],
+            instructions: [],
+            cuisine: Cuisine.Australian,
+            category: Categories.MainCourse,
+            difficulty: Difficulty.Easy,
+            costRange: CostRange.Budget,
+            notes: "",
+            tags: [],
+            isVegetarian: false,
+            description: "",
+            preparationTime: 0,
+            cookingTime: 0,
+            servings: 0,
+          });
+        })
+        .catch((error) => {
+          console.error("Error adding recipe:", error);
+          throw error;
+        }),
+    onSuccess: () => {
+      navigate("/");
+      // Invalidate the "recipesKey" query to trigger a refetch
+      queryClient.invalidateQueries({ queryKey: ["recipesKey"] });
+    },
+  });
+  const handleAddRecipe = () => {
+    const newRecipe = {
+      title: formData.title,
+      description: formData.description,
+      category: formData.category,
+      cuisine: formData.cuisine,
+      preparationTime: formData.preparationTime,
+      cookingTime: formData.cookingTime,
+      servings: formData.servings,
+      difficulty: formData.difficulty,
+      costRange: formData.costRange,
+      ingredients: formData.ingredients,
+      instructions: formData.instructions,
+      tags: formData.tags,
+      isVegetarian: formData.isVegetarian,
+      notes: formData.notes,
+    };
+    addRecipeMutation.mutate(newRecipe);
+  };
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -151,44 +199,7 @@ export function Form({ mode }: { mode: "create" | "edit" }) {
       handleUpdate();
       navigate(`/Recipe/${recipeId}`);
     } else {
-      try {
-        const response = await fetch("https://localhost:44369/api/Recipe", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData), // Send the recipe object as the request body
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to add the recipe");
-        }
-
-        const result = await response.json();
-        console.log("Recipe added:", result); // Log the response (new recipe with generated ID)
-        setFormData({
-          title: "",
-          ingredients: [],
-          instructions: [],
-          cuisine: Cuisine.Australian,
-          category: Categories.MainCourse,
-          difficulty: Difficulty.Easy,
-          costRange: CostRange.Budget,
-          notes: "",
-          tags: [],
-          isVegetarian: false,
-          description: "",
-          preparationTime: 0,
-          cookingTime: 0,
-          servings: 0,
-        }); // Reset form state after successful submit
-        navigate("/");
-      } catch (err) {
-        // setError("An error occurred while adding the recipe.");
-        console.error(err);
-      } finally {
-        // setIsLoading(false);
-      }
+      handleAddRecipe();
     }
   };
 

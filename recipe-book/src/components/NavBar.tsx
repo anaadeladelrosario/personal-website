@@ -12,33 +12,37 @@ import { BurgerMenu } from "./BurgerMenu";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { RecipeProps } from "../components/interfaces/Recipe";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const [recipes, setRecipes] = useState([]);
 
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const response = await axios.get("https://localhost:44369/api/Recipe");
-        setRecipes(response.data.$values);
-      } catch (error) {
-        console.error("Error fetching recipes:", error);
-      }
-    };
+  const fetchRecipes = async () => {
+    try {
+      const response = await axios.get("https://localhost:44369/api/Recipe");
+      return response.data.$values;
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+      throw error;
+    }
+  };
 
-    fetchRecipes();
-  }, []);
+  const { data: recipesData } = useQuery({
+    queryKey: ["recipesKey"],
+    queryFn: fetchRecipes,
+    refetchOnWindowFocus: true,
+  });
 
   const menuItems: MenuItemProps[] = [
     { label: "Home", icon: Home01Icon },
     {
       label: "Recipes",
       icon: ShoppingBag01Icon,
-      subItems: recipes.map((recipe) => ({
+      subItems: recipesData?.map((recipe: RecipeProps) => ({
         label: recipe.title,
-        id: recipe.id,
+        id: recipe.id?.toString(),
       })),
     },
     { label: "Add Recipe", icon: Add01Icon },
